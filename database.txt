@@ -1,4 +1,4 @@
-t1-token id and phno.
+1-token id and phno.
 
 t2-Patient table
 	-id
@@ -56,6 +56,14 @@ stage5:medicines collection
 
 	
 database??	
-		
+
 
 	
+dyanmic QUEUE TABLE:
+	-current date and time
+	-doctor_id
+	-patient_id
+	-time required to reach doctor.(predicted)
+	-time required(actual)	
+	
+static:should go in static database when actula time is filled
