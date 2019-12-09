@@ -1,7 +1,8 @@
-from registration import models
+from registration import models as registration_models
 
-def getDoctorEstimatedTime(models.doctor):
+def getDoctorEstimatedTime(doctor):
+    print(doctor.name+"is selected")
     return 10
 
-def calculateDoctorTimePerPatient(latest_Time,models.doctor):
+def calculateDoctorTimePerPatient(latest_Time,doctor):
     return 10

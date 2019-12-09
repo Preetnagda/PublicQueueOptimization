@@ -1,26 +1,41 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <title></title>
   </head>
-  <body>
-    <form class="" action="index.html" method="post">
+  <body onload="loaded()">
+    <form  method="post">
       {% csrf_token %}
       Patient Full Name :
-      <input type="text" name="patient_name">
+      <input type="text" name="patient_name" required>
+      <br><br>
       Phone Number :
-      <input type="number" name="ptphno">
+      <input type="number" name="ptphno" required>
+      <br><br>
+
       Type of medication :
-      <select name="type_of_medication">
-
+      <select name="type_of_medication" id="type_of_medication" onchange="tomChanged()" required> 
+        {% for types in types_of_medication %}
+          <option value="{{types.0}}">{{types.1}}</option>
+        {% endfor %}
       </select>
+      <br><br>
+      Choose Doctor ?
+      <input type="checkbox" onclick="chooseDocClicked()" name="chooseDoc" id="chooseDoc" value="">
+      <br><br>
       Available Doctors :
-      <input type="text" name="doc" value="">
-      <select class="" name="">
-
+      <p>{{docTotal}}</p>
+      <select name="available_doctors" id="available_doctors" disabled>
+        <!-- try and use with template tag -->
+        <option value="-1">Choose Automatically</option>
+        {% for doc in doctors %}
+          <option value="{{doc}}">{{doc}}</option>
+        {% endfor %}
       </select>
-
+      <input type="submit" name="" value="Submit">
     </form>
+    <script src="{% static "registration/js/registrationForm.js" %}" charset="utf-8"></script>
   </body>
 </html>

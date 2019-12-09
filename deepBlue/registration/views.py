@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.decorators.http import require_POST
 from registration import forms,models,methods
 from django.http import HttpResponse
+from queueAlgorithms import algorithms
 
 # Create your views here.
 def index(request):
@@ -22,12 +23,30 @@ def generateToken(request):
     return HttpResponse(generatedID)
 
 def register(request):
+
     if request.method == "POST":
-        form = forms.registrationForm(request.POST)
-        if form.is_valid():
-            ptname = form.cleaned_data["patient_name"]
-            ptphno = form.cleaned_data["phno"]
-            
-    form = forms.registrationForm()
-    context = {'form':form}
+        # Registration process
+        ptname = request.POST["patient_name"]
+        ptno = request.POST["ptphno"]
+        tom = request.POST["type_of_medication"]
+        doc = request.POST.get("available_doctors",-1)
+        reqDoc = models.doctor.objects.filter(name=doc)[0]
+        estimatedTime = algorithms.getDoctorEstimatedTime(reqDoc)
+        # check duplicate patients later
+        newPatient = models.patient(name=ptname,phno=ptno)
+        newPatient.save()
+        queueEntry = models.appointmentQueue(
+            patient = newPatient,
+            doctor_required = reqDoc,
+            predicted_time = estimatedTime
+        )
+        queueEntry.save()
+        return HttpResponse("Thank You")
+
+    types_of_medication = models.doctor.CHOICES
+    doctors = []
+    for doc in models.doctor.objects.all():
+        doctors.append(doc.name)
+    docTotal = len(doctors)
+    context={"types_of_medication":types_of_medication,"doctors":doctors,"docTotalRange":range(docTotal)}
     return render(request,"registration/directRegistration.html",context)
