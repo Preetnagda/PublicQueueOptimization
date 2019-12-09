@@ -22,6 +22,12 @@ def generateToken(request):
     return HttpResponse(generatedID)
 
 def register(request):
+    if request.method == "POST":
+        form = forms.registrationForm(request.POST)
+        if form.is_valid():
+            ptname = form.cleaned_data["patient_name"]
+            ptphno = form.cleaned_data["phno"]
+            
     form = forms.registrationForm()
     context = {'form':form}
     return render(request,"registration/directRegistration.html",context)

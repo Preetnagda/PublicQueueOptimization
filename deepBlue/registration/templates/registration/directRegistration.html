@@ -7,7 +7,20 @@
   <body>
     <form class="" action="index.html" method="post">
       {% csrf_token %}
-      {{form.as_p}}
+      Patient Full Name :
+      <input type="text" name="patient_name">
+      Phone Number :
+      <input type="number" name="ptphno">
+      Type of medication :
+      <select name="type_of_medication">
+
+      </select>
+      Available Doctors :
+      <input type="text" name="doc" value="">
+      <select class="" name="">
+
+      </select>
+
     </form>
   </body>
 </html>

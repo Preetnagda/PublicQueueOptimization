@@ -23,7 +23,7 @@ class doctor(models.Model):
 
 class appointmentQueue(models.Model):
     date_time = models.DateField(default=datetime.datetime.now())
-    patint = models.OneToOneField(patient,on_delete=models.CASCADE)
+    patient = models.OneToOneField(patient,on_delete=models.CASCADE)
     doctor_required = models.OneToOneField(doctor,on_delete=models.CASCADE)
     predicted_time = models.DecimalField(max_digits=10,decimal_places=1)
     actual_time = models.DecimalField(max_digits=10,decimal_places=1)
