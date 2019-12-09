@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'registration',
+    'doc_appoint',
+    'medication_billing',
+    'queueAlgorithms',
 ]
 
 MIDDLEWARE = [
@@ -77,9 +80,9 @@ WSGI_APPLICATION = 'deepBlue.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'staticdb',
-        'USER': 'preet',
-        'PASSWORD': 'preet',
+        'NAME': 'static_db',
+        'USER': 'postgres',
+        'PASSWORD': '6204',
         'HOST': 'localhost',
         'PORT': '',
     }
