@@ -6,6 +6,7 @@
     <title></title>
   </head>
   <body onload="loaded()">
+    <p id="pass"></p>
     <form  method="post">
       {% csrf_token %}
       Patient Full Name :
@@ -14,9 +15,8 @@
       Phone Number :
       <input type="number" name="ptphno" required>
       <br><br>
-
       Type of medication :
-      <select name="type_of_medication" id="type_of_medication" onchange="tomChanged()" required> 
+      <select name="type_of_medication" id="type_of_medication" onchange="tomChanged()" required>
         {% for types in types_of_medication %}
           <option value="{{types.0}}">{{types.1}}</option>
         {% endfor %}
@@ -26,16 +26,17 @@
       <input type="checkbox" onclick="chooseDocClicked()" name="chooseDoc" id="chooseDoc" value="">
       <br><br>
       Available Doctors :
-      <p>{{docTotal}}</p>
       <select name="available_doctors" id="available_doctors" disabled>
         <!-- try and use with template tag -->
         <option value="-1">Choose Automatically</option>
-        {% for doc in doctors %}
-          <option value="{{doc}}">{{doc}}</option>
-        {% endfor %}
+        
       </select>
       <input type="submit" name="" value="Submit">
     </form>
     <script src="{% static "registration/js/registrationForm.js" %}" charset="utf-8"></script>
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
   </body>
 </html>

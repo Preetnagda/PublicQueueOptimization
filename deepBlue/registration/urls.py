@@ -21,4 +21,5 @@ urlpatterns = [
     path('', views.index),
     path('generateToken',views.generateToken),
     path('register',views.register),
+    path('doctorsList',views.getDoctorsList),
 ]

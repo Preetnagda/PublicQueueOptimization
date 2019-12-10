@@ -1,9 +1,8 @@
 from django.shortcuts import render
 from django.views.decorators.http import require_POST
 from registration import forms,models,methods
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from queueAlgorithms import algorithms
-
 # Create your views here.
 def index(request):
     form = forms.numberInput()
@@ -14,16 +13,13 @@ def index(request):
 def generateToken(request):
     form = forms.numberInput(request.POST)
     generatedID = 0
-
     if form.is_valid():
         newEntry = form.save()
         generatedID = newEntry.id
         print(generatedID)
-
     return HttpResponse(generatedID)
 
 def register(request):
-
     if request.method == "POST":
         # Registration process
         ptname = request.POST["patient_name"]
@@ -50,3 +46,20 @@ def register(request):
     docTotal = len(doctors)
     context={"types_of_medication":types_of_medication,"doctors":doctors,"docTotalRange":range(docTotal)}
     return render(request,"registration/directRegistration.html",context)
+
+
+def getDoctorsList(request):
+    tom = request.GET.get('tom',None)
+    print(tom)
+    CHOICES = models.doctor.CHOICES
+    for choice in CHOICES:
+        if(choice[1]==tom):
+            tom = choice[0]
+    docList = models.doctor.objects.filter(speciality=tom)
+    docListNames=[]
+    for doc in docList:
+        docListNames.append(doc.name)
+        algorithms.getDoctorEstimatedTime(doc)
+    print(docListNames)
+    jsonData = {'docList':docListNames}
+    return JsonResponse(jsonData)
