@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'registration',
     'doc_appoint',
-    'medication_billing',
     'queueAlgorithms',
 ]
 
