@@ -22,15 +22,6 @@
         {% endfor %}
       </select>
       <br><br>
-      Choose Doctor ?
-      <input type="checkbox" onclick="chooseDocClicked()" name="chooseDoc" id="chooseDoc" value="">
-      <br><br>
-      Available Doctors :
-      <select name="available_doctors" id="available_doctors" disabled>
-        <!-- try and use with template tag -->
-        <option value="-1">Choose Automatically</option>
-        
-      </select>
       <input type="submit" name="" value="Submit">
     </form>
     <script src="{% static "registration/js/registrationForm.js" %}" charset="utf-8"></script>

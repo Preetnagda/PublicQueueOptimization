@@ -25,41 +25,20 @@ def register(request):
         ptname = request.POST["patient_name"]
         ptno = request.POST["ptphno"]
         tom = request.POST["type_of_medication"]
-        doc = request.POST.get("available_doctors",-1)
-        reqDoc = models.doctor.objects.filter(name=doc)[0]
-        estimatedTime = algorithms.getDoctorEstimatedTime(reqDoc)
-        # check duplicate patients later
-        newPatient = models.patient(name=ptname,phno=ptno)
-        newPatient.save()
-        queueEntry = models.appointmentQueue(
-            patient = newPatient,
-            doctor_required = reqDoc,
-            predicted_time = estimatedTime
-        )
-        queueEntry.save()
-        return HttpResponse("Thank You")
+        doc = methods.getOptimalDoctor
+        if doc is not -1:
+            estimatedTime = algorithms.getDoctorEstimatedTime(doc)
+            # check duplicate patients later
+            newPatient = models.patient(name=ptname,phno=ptno)
+            newPatient.save()
+            queueEntry = models.appointmentQueue(
+                patient = newPatient,
+                doctor_required = doc,
+                predicted_time = estimatedTime
+            )
+            queueEntry.save()
+            return HttpResponse("Thank You")
 
     types_of_medication = models.doctor.CHOICES
-    doctors = []
-    for doc in models.doctor.objects.all():
-        doctors.append(doc.name)
-    docTotal = len(doctors)
-    context={"types_of_medication":types_of_medication,"doctors":doctors,"docTotalRange":range(docTotal)}
+    context={"types_of_medication":types_of_medication}
     return render(request,"registration/directRegistration.html",context)
-
-
-def getDoctorsList(request):
-    tom = request.GET.get('tom',None)
-    print(tom)
-    CHOICES = models.doctor.CHOICES
-    for choice in CHOICES:
-        if(choice[1]==tom):
-            tom = choice[0]
-    docList = models.doctor.objects.filter(speciality=tom)
-    docListNames=[]
-    for doc in docList:
-        docListNames.append(doc.name)
-        algorithms.getDoctorEstimatedTime(doc)
-    print(docListNames)
-    jsonData = {'docList':docListNames}
-    return JsonResponse(jsonData)
