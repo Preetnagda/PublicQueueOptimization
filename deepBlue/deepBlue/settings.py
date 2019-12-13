@@ -37,10 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'registration',
-    'doc_appoint',
-    'medication_billing',
-    'queueAlgorithms',
+    'registration.apps.RegistrationConfig',
+    'doc_appoint.apps.DocAppointConfig',
+    
 ]
 
 MIDDLEWARE = [
@@ -81,8 +80,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'static_db',
-        'USER': 'postgres',
-        'PASSWORD': '6204',
+        'USER': 'yash',
+        'PASSWORD': 'yashmeet',
         'HOST': 'localhost',
         'PORT': '',
     }
