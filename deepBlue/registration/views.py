@@ -37,6 +37,7 @@ def register(request):
                 predicted_time = estimatedTime
             )
             queueEntry.save()
+            request.session['current_Patient'] = newPatient
             return HttpResponse("Thank You")
 
     types_of_medication = models.doctor.CHOICES
