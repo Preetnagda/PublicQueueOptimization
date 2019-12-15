@@ -29,4 +29,8 @@ class appointmentQueue(models.Model):
     patient = models.ForeignKey(patient,on_delete=models.CASCADE)
     doctor_required = models.ForeignKey(doctor,on_delete=models.CASCADE)
     predicted_time = models.DecimalField(max_digits=10,decimal_places=1)
-    actual_time = models.DecimalField(max_digits=10,decimal_places=1,null=True,blank=True,default=None)
+    actual_time = models.DecimalField(max_digits=10,decimal_places=1,null=True,blank=True,default=None) #time_in_q  time_out - time_in
+    time_in=models.DateTimeField(default=datetime.datetime.now())
+    time_out_consultation_in=models.DateTimeField(default=datetime.datetime.now())
+    consultation_out=models.DateTimeField(default=datetime.datetime.now())
+    consultation_time = models.DecimalField(max_digits=10,decimal_places=1,null=True,blank=True,default=None)#consultion_time_out - consultation_time_in

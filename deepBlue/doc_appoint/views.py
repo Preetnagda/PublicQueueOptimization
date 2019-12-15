@@ -16,9 +16,9 @@ def patient_view(request):
 
     return HttpResponse (expected_time)
 
-def doctor_view(request):
-    doc_id=request.GET['doc_id']
-    q_size = len(appointmentQueue.objects.filter(doctor_required_id=doc_id))
+
+
+
 
 
 

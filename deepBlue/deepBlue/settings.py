@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'registration.apps.RegistrationConfig',
     'doc_appoint.apps.DocAppointConfig',
+    'doctors_app.apps.DoctorsAppConfig'
 
 ]
 
