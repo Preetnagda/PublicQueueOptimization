@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    <form action="generateToken" method="post">
+      {% csrf_token %}
+      <input type="number" name="phNo" maxlength="10" value="">
+      <input type="submit" name="" value="Generate Token Value">
+    </form>
+  </body>
+</html>

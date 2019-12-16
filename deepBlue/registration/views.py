@@ -1,23 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views.decorators.http import require_POST
-from registration import forms,models,methods
+from registration import models,methods
 from django.http import HttpResponse,JsonResponse
 from queueAlgorithms import algorithms
 # Create your views here.
-def index(request):
-    form = forms.numberInput()
-    context = {'form':form}
-    return render(request,"registration/token.html",context)
 
-@require_POST
-def generateToken(request):
-    form = forms.numberInput(request.POST)
-    generatedID = 0
-    if form.is_valid():
-        newEntry = form.save()
-        generatedID = newEntry.id
-        print(generatedID)
-    return HttpResponse(generatedID)
 
 def register(request):
     if request.method == "POST":
@@ -25,9 +12,9 @@ def register(request):
         ptname = request.POST["patient_name"]
         ptno = request.POST["ptphno"]
         tom = request.POST["type_of_medication"]
-        doc = methods.getOptimalDoctor
+        doc = methods.getOptimalDoctor(tom)
         if doc is not -1:
-            estimatedTime = algorithms.getDoctorEstimatedTime(doc)
+            estimatedTime = algorithms.getDoctor_OverallEstimatedTime(doc)
             # check duplicate patients later
             newPatient = models.patient(name=ptname,phno=ptno)
             newPatient.save()
@@ -37,8 +24,8 @@ def register(request):
                 predicted_time = estimatedTime
             )
             queueEntry.save()
-            request.session['current_Patient'] = newPatient
-            return HttpResponse("Thank You")
+            request.session['current_Patient'] = newPatient.id
+            return redirect("../patient/")
 
     types_of_medication = models.doctor.CHOICES
     context={"types_of_medication":types_of_medication}

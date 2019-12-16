@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'registration.apps.RegistrationConfig',
     'doc_appoint.apps.DocAppointConfig',
-    'doctors_app.apps.DoctorsAppConfig'
-
+    'doctors_app.apps.DoctorsAppConfig',
+    'offline_token.apps.OfflineTokenConfig',
 ]
 
 MIDDLEWARE = [
