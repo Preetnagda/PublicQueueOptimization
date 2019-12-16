@@ -10,5 +10,5 @@ def patient_view(request):
     q_details_for_curr_pat = models.appointmentQueue.objects.filter(patient=patient)[0]
     doc = q_details_for_curr_pat.doctor_required
     queueStatus = algorithms.getDoctor_PatientEstimatedTime(patient,doc)
-    context = {"totalPeople": queueStatus.patientAhead, "expected_time": queueStatus.expected_time}
-    return HttpResponse (expected_time)
+    context = {"totalPeople": queueStatus["patientAhead"], "expected_time": queueStatus["estimatedTime"]}
+    return HttpResponse (context["totalPeople"])

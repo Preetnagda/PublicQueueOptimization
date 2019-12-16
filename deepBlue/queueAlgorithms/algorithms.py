@@ -2,11 +2,11 @@ from registration import models as registration_models
 
 def getDoctor_PatientEstimatedTime(patient,doctor):
     timepp = doctor.timepp
-    q_details = models.appointmentQueue.objects.filter(doctor_required=doctor)
+    q_details = registration_models.appointmentQueue.objects.filter(doctor_required=doctor)
     patientAhead = 2
     estimatedTime = 10
-    context = {"patientAhead":patientAhead,"estimatedTime":estimatedTime}
-    return context
+    
+    return {"patientAhead":patientAhead,"estimatedTime":estimatedTime}
 
 def getDoctor_OverallEstimatedTime(doctor):
 
