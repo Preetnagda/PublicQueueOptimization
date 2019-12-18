@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'doc_appoint.apps.DocAppointConfig',
     'doctors_app.apps.DoctorsAppConfig',
     'offline_token.apps.OfflineTokenConfig',
+    'queueAlgorithms.apps.QueuealgorithmsConfig',
 ]
 
 MIDDLEWARE = [
@@ -81,8 +82,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'static_db',
-        'USER': 'postgres',
-        'PASSWORD': '6204',
+        'USER': 'yash',
+        'PASSWORD': 'yashmeet',
         'HOST': 'localhost',
         'PORT': '',
     }
