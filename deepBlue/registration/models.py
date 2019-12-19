@@ -19,7 +19,7 @@ class doctor(models.Model):
     phno = models.CharField(max_length=10)
     email_id = models.EmailField()
     speciality = models.CharField(choices = CHOICES,max_length=20)
-
+    feePerPatient = models.DecimalField(max_digits=10,decimal_places=2)
 
 class appointmentQueue(models.Model):
     date_time = models.DateTimeField(default=datetime.datetime.now())

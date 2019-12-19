@@ -84,8 +84,11 @@ DATABASES = {
         'NAME': 'static_db',
         'USER': 'postgres',
         'PASSWORD': '6204',
-        'HOST': 'localhost',
-        'PORT': '',
+        'HOST':'localhost',
+        # 'USER': 'yash',
+        # 'PASSWORD': 'yashmeet',
+        # 'HOST': '25.57.43.180',
+        # 'PORT': '5432',
     }
 }
 
