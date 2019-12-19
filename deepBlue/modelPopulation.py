@@ -25,14 +25,11 @@ def populatePatient(n=50):
 def populateAppointmentRecords(days=50,entries=10):
     newDate = datetime.datetime.now()
     newDate = newDate - timedelta(days = days)
-    i = 0
     for din in range(days):
-
-        newDate = newDate + timedelta(days = i)
-        i = i+1
-        for entries in range(entries):
+        newDate = newDate + timedelta(days = 1)
+        for entry in range(entries):
             newDate = newDate+timedelta(minutes = 5)
-            queuePatient = patient.objects.filter(id=random.randrange(1,59))[0]
+            queuePatient = patient.objects.filter(id=random.randrange(1,50))[0]
             queueDoctor = doctor.objects.filter(id=random.randrange(1,4))[0]
             queuePredictedTime = random.uniform(5.00,15.00)
             actualPredictedTime = random.uniform(5.00,15.00)
@@ -53,7 +50,7 @@ def populateAppointmentRecords(days=50,entries=10):
                                         consultation_out=queueConsultationOut,
                                         consultation_time=consultaionTime
                                         )[0]
-            newappointmentRecord.save()
+            print(newappointmentRecord.time_in)
 
 
 if __name__ == '__main__':

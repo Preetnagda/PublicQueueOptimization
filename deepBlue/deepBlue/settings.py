@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'doctors_app.apps.DoctorsAppConfig',
     'offline_token.apps.OfflineTokenConfig',
     'queueAlgorithms.apps.QueuealgorithmsConfig',
+    'billing',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +82,7 @@ WSGI_APPLICATION = 'deepBlue.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'static_db',
+        'NAME': 'deepBlueHospital',
         'USER': 'postgres',
         'PASSWORD': '6204',
         'HOST':'localhost',
