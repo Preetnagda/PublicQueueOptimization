@@ -1,8 +1,8 @@
-from registration import models as registration_models
+from registration.models import *
 
 def getDoctor_PatientEstimatedTime(patient,doctor):
     timepp = doctor.timepp
-    q_details = registration_models.appointmentQueue.objects.filter(doctor_required=doctor)
+    q_details = appointmentQueue.objects.filter(doctor_required=doctor)
     patientAhead = 2
     estimatedTime = 10
     
