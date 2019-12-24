@@ -25,9 +25,7 @@ def patient_exit(request):
     new_record = current_patient
     new_record.consultation_out=datetime.now(timezone.utc)
     new_record.consultation_time = new_record.consultation_out - new_record.consultation_time_in 
-    current_patient.delete()
-    
-    
+    current_patient.delete()  
     
     return redirect('doctor')
 

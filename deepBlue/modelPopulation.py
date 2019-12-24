@@ -37,7 +37,7 @@ def populateAppointmentRecords(days=50,entries=10):
             queuePredictedTimeDecimal = queuePredictedTime - int(queuePredictedTime)
             queueTimeIn = newDate + timedelta(minutes = queuePredictedTimeInteger, seconds = queuePredictedTimeDecimal*60)
             queueConsultationIn = queueTimeIn + timedelta(minutes=actualPredictedTime)
-            consultaionTime = random.randrange(3.00,7.00)
+            consultaionTime = random.random.uniform(3.00,7.00)
             queueConsultationOut = queueConsultationIn + timedelta(minutes=consultaionTime)
 
             newappointmentRecord = appointmentRecords.objects.get_or_create(
