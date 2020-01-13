@@ -85,10 +85,10 @@ DATABASES = {
         'NAME': 'deepBlueHospital',
         'USER': 'postgres',
         'PASSWORD': '6204',
-        'HOST':'localhost',
-        # 'USER': 'yash',
-        # 'PASSWORD': 'yashmeet',
-        # 'HOST': '25.57.43.180',
+         'HOST':'localhost',
+        #  'USER': 'yash',
+        #  'PASSWORD': 'yashmeet',
+         #'HOST': '25.57.43.180',
         # 'PORT': '5432',
     }
 }
@@ -133,4 +133,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "doc_appoint/static"),
 ]
