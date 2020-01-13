@@ -1,13 +1,21 @@
+var timer = null;
+
 function fetchdata(){
  $.ajax({
-  url: '',
-  type: 'POST',
+  url: 'getPatientPos',
+  type: 'GET',
   success: function(data){
    // Perform operation on return value
     console.log(data)
-    document.getElementById("expected_time").innerHTML = data['expected_time'];
-    
-   
+    if (data['totalPeople']>1){
+      document.getElementById("expected_time").innerHTML = data['expected_time'];
+      document.getElementById("patAhead").innerHTML = data['totalPeople'];
+    }
+    else if (data['totalPeople']==-1) {
+      location.reload();
+
+    }
+
   },
   complete:function(data){
    setTimeout(fetchdata,10000);
@@ -16,5 +24,5 @@ function fetchdata(){
 }
 
 $(document).ready(function(){
- setTimeout(fetchdata,10000);
+ timer = setTimeout(fetchdata,10000);
 })

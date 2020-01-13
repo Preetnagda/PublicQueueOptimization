@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
       {% load static %}
+      <link rel="stylesheet" href="{% static 'css/custom.css' %}">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
       <script src="{% static 'support.js' %}"></script>
     <meta charset="utf-8">
     <title></title>
   </head>
   <body>
-    <Label>Waiting Time:</Label>
-    <div id = 'expected_time'>{{expected_time}}</div>
-    <div>{{totalPeople}}</div>
+    {{patient_name}}<br>
+    {% if totalPeople == 0 %}
+      <p>Go In</p>
+    {% elif totalPeople == 1 %}
+      <p>You are next</p>
+    {% else %}
+      <Label>Waiting Time:</Label>
+      <div id = 'expected_time'>{{expected_time}}</div>
+      <div id="patAhead">{{totalPeople}}</div>
+    {% endif %}
   </body>
 </html>

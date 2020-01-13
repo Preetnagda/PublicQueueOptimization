@@ -3,8 +3,15 @@ from django.views.decorators.http import require_POST
 from registration import models,methods
 from django.http import HttpResponse,JsonResponse
 from queueAlgorithms import algorithms
+import datetime
 # Create your views here.
 
+
+def checkUserStatus(request):
+    if request.session.get('current_patient',None):
+        return redirect("../patient/")
+    else:
+        return redirect("/register")
 
 def register(request):
     if request.method == "POST":
@@ -18,10 +25,12 @@ def register(request):
             # check duplicate patients later
             newPatient = models.patient(name=ptname,phno=ptno)
             newPatient.save()
+            now = datetime.datetime.now()
             queueEntry = models.appointmentQueue(
                 patient = newPatient,
                 doctor_required = doc,
-                predicted_time = estimatedTime
+                predicted_time = estimatedTime,
+                time_in = now
             )
             queueEntry.save()
             request.session['current_Patient'] = newPatient.id

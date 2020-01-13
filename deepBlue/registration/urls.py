@@ -19,4 +19,5 @@ from registration import views
 
 urlpatterns = [
     path('register',views.register),
+    path('',views.checkUserStatus),
 ]
