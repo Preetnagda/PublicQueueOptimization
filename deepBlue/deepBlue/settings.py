@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '192.168.29.84',
-    '127.0.0.1'
+    '127.0.0.1','0.0.0.0'
 ]
 
 
@@ -86,13 +86,21 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'deepBlueHospital',
+
+        'USER': 'postgres',
+        'PASSWORD': 'root1234',
+        'HOST':'localhost',
+        
+        """
         'USER': 'postgres',
         'PASSWORD': '6204',
-         'HOST':'localhost',
-        #  'USER': 'yash',
-        #  'PASSWORD': 'yashmeet',
-         #'HOST': '25.57.43.180',
-        # 'PORT': '5432',
+        'HOST':'localhost',
+        'USER': 'yash',
+        'PASSWORD': 'yashmeet',
+        'HOST': '25.57.43.180',
+        """
+        
+        'PORT':'5432',
     }
 }
 
