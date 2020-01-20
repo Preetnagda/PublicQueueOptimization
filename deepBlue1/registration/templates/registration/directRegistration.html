@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body onload="loaded()">
+    <p id="pass"></p>
+    <form  method="post">
+      {% csrf_token %}
+      Patient Full Name :
+      <input type="text" name="patient_name" required>
+      <br><br>
+      Phone Number :
+      <input type="number" name="ptphno" required>
+      <br><br>
+      Type of medication :
+      <select name="type_of_medication" id="type_of_medication" onchange="tomChanged()" required>
+        {% for types in types_of_medication %}
+          <option value="{{types.0}}">{{types.1}}</option>
+        {% endfor %}
+      </select>
+      <br><br>
+      <input type="submit" name="" value="Submit">
+    </form>
+    <script src="{% static "registration/js/registrationForm.js" %}" charset="utf-8"></script>
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+  </body>
+</html>

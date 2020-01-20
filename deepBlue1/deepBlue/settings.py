@@ -25,11 +25,7 @@ SECRET_KEY = 'h@@2=0sq$3hhak^dd73b9zub(!3n=fznm^h^1h#$&)*_x#%p%k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    '192.168.29.84',
-    '127.0.0.1',
-    '0.0.0.0'
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -87,22 +83,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'deepBlueHospital',
-
         'USER': 'postgres',
         'PASSWORD': '6204',
-
         'HOST':'localhost',
-
-        """
-        'USER': 'postgres',
-        'PASSWORD': 'root1234',
-        'HOST':'localhost',
-        'USER': 'yash',
-        'PASSWORD': 'yashmeet',
-        'HOST': '25.57.43.180',
-        """
-
-        'PORT':'5432',
+        # 'USER': 'yash',
+        # 'PASSWORD': 'yashmeet',
+        # 'HOST': '25.57.43.180',
+        # 'PORT': '5432',
     }
 }
 
@@ -146,5 +133,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-    os.path.join(BASE_DIR, "doc_appoint/static"),
 ]

@@ -1,5 +1,2 @@
-# ignore migrations
-**/migrations
-
 # ignore pyc 
 *.pyc
