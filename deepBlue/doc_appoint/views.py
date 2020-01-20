@@ -28,8 +28,8 @@ def getMyPatientDetails(request):
         patient = models.patient.objects.filter(id=request.session['current_Patient'])[0]
         setQueue = models.appointmentQueue.objects.filter(patient=patient)
         if (setQueue.count() == 0):
-            del request.session['current_Patient']
-            request.session.modified = True
+            # del request.session['current_Patient']
+            # request.session.modified = True
             return JsonResponse({"totalPeople":-1})
         q_details_for_curr_pat = setQueue[0]
         doc = q_details_for_curr_pat.doctor_required

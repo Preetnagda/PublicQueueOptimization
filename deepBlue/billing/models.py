@@ -10,8 +10,7 @@ class patientBill(models.Model):
 class billingQueue(models.Model):
     billNo = models.OneToOneField(patientBill,on_delete=models.CASCADE)
     date_time = models.DateTimeField(default=datetime.datetime.now())
-    #doctor = models.ForeignKey(doctor,on_delete=models.CASCADE)
+    doctor = models.ForeignKey(registration_models.doctor,on_delete=models.CASCADE)
     predicted_time = models.DecimalField(max_digits=10,decimal_places=1)
     actual_time = models.DecimalField(max_digits=10,decimal_places=1,null=True,blank=True,default=None) #time_in_q  time_out - time_in
     #time_in = models.ForeignKey()
-
