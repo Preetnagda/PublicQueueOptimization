@@ -14,3 +14,4 @@ class billingQueue(models.Model):
     predicted_time = models.DecimalField(max_digits=10,decimal_places=1)
     actual_time = models.DecimalField(max_digits=10,decimal_places=1,null=True,blank=True,default=None) #time_in_q  time_out - time_in
     #time_in = models.ForeignKey()
+

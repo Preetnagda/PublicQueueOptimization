@@ -1,17 +1,91 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en" dir="ltr">
   <head>
-      {% load static %}
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
       <script src="{% static 'support.js' %}"></script>
     <meta charset="utf-8">
-    <title></title>
+    <style>
+
+      #containerIntro h1{
+       
+        display: inline;
+          vertical-align: center;
+          text-align : left;
+      }
+      #containerIntro p {
+          
+          display: inline;
+          vertical-align: center;
+          text-align : right;
+          float: right;
+      }
+      table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #ddd;
+      }
+
+      th, td {
+        text-align: left;
+        padding: 8px;
+        border : 1px solid #ddd;
+      }
+      tr:nth-child(odd){background-color: #f2f2f2}
+
+      #datetime{
+        text-align : right;
+      }
+      
+    </style>
+    <title>Billing</title>
   </head>
-  <body>
-    <Label>Waiting Time:</Label>
-    <div id = 'expected_time'>{{expected_time}}</div>
-    <div>{{totalPeople}}</div>
-  <!-- <Label>Bill Amount:</Label>
-     <div id = 'bill_amount'>{{bill_amount}}</div>-->  
+  <body onLoad="startTime()">
+
+  <div id="containerIntro">
+    <h1>Billing</h1>
+    <p id="datetime">{{ date }} <span id="txt"></span></p>
+</div>
+  <p></p>
+<hr></hr>
+
+    <div style="overflow-x:auto;">
+      <table style="width:100%">
+      <tr>
+        <th>Name</th>
+        <th>PhoneNumber</th>
+        <th>link</th>
+      </tr>
+      <tr>
+        <td>{{ p_name }}</td>
+        <td>{{ ph_no  }}</td>
+        <td>{{ link }} </td>
+      </tr>
+      <tr>
+        <td>{{ p_name }}</td>
+        <td>{{ ph_no  }}</td>
+        <td>{{ link }} </td>
+      </tr>
+    </table>
+
+    <script>
+      function startTime() {
+        var today = new Date();
+        var h = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        document.getElementById('txt').innerHTML =
+        h + ":" + m + ":" + s;
+        var t = setTimeout(startTime, 500);
+      }
+      function checkTime(i) {
+        if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+        return i;
+      }
+    </script>
+
   </body>
 </html>

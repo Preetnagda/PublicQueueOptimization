@@ -35,7 +35,7 @@ def register(request):
             queueEntry.save()
             request.session['current_Patient'] = newPatient.id
             return redirect("../patient/")
-
+            
     types_of_medication = models.doctor.CHOICES
     context={"types_of_medication":types_of_medication}
     return render(request,"registration/directRegistration.html",context)

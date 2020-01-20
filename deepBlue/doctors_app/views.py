@@ -1,5 +1,4 @@
 from django.shortcuts import render,redirect
-from .models import *
 from django.http import HttpResponse
 from queueAlgorithms.models import *
 from datetime import datetime, timezone
