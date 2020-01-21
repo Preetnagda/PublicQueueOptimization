@@ -16,7 +16,8 @@ function fetchdata(){
 
     }
     else if(data['totalPeople']==-2){
-      window.location.href = '';
+      alert("hello");
+      window.location.href = '../billing';
     }
 
   },

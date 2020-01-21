@@ -1,5 +1,5 @@
 from registration import models as registration_models
-from billing import models as billing_models
+from billing.models import billingQueue
 import datetime
 from django.utils import timezone
 
@@ -34,6 +34,6 @@ def calculateDoctorTimePerPatient(latest_Time,doctor):
     return 10
 
 def getGeneralBillingQueueEstimatedTime():
-    billing_queue = billing_models.billingQueue.objects.all()
-    estimatedTime = billingQueue.count()*4
+    billing_queue = billingQueue.objects.all()
+    estimatedTime = billing_queue.count()*4
     return estimatedTime

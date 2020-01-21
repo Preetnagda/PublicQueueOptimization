@@ -3,5 +3,6 @@ from django.urls import path
 from billing import views
 
 urlpatterns = [
-    path('',views.generateBill),
+    path('counter',views.generateBill),
+    path('',views.patientView),
 ]
