@@ -15,6 +15,9 @@ function fetchdata(){
       location.reload();
 
     }
+    else if(data['totalPeople']==-2){
+      window.location.href = '';
+    }
 
   },
   complete:function(data){
