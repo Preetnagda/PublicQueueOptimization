@@ -2,51 +2,60 @@
 {% load static %}
 <html lang="en" dir="ltr">
   <head>
-      <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-      <link rel="stylesheet" href="{% static 'css/index.css' %}">
-    <script src="{% static 'billing/js/clock.js' %}"></script>
-     
-    <style>
+  
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
     
-    </style>
-    <title>Billing</title>
-  </head>
-  <body class="container-fluid" onLoad="startTime()">
-<header id="containerIntro">
-    <h1>Billing</h1>
-    <p id="datetime">{{ date }} <span id="txt"></span></p>
-</header>
-  <p></p>
-<hr></hr>
+    <script src="{% static 'billing/js/clock.js' %}"></script>
+    
+    <title>Billing Counter</title>
 
-    <div style="overflow-x:auto;">
-      <table class="table table-hover table-bordered table-striped">
-      <tr>
-        <th>Name</th>
-        <th>PhoneNumber</th>
-        <th>link</th>
-      </tr>
-      <tr>
-        <td>{{ p_name }}</td>
-        <td>{{ ph_no  }}</td>
-        <td>{{ link }} </td>
-      </tr>
-      <tr>
-        <td>{{ p_name }}</td>
-        <td>{{ ph_no  }}</td>
-        <td>{{ link }} </td>
-      </tr>
-    </table>
+  <body onLoad="startTime()">
+
+    <header class="navbar navbar-expand sticky-top navbar-light bg-light">
+      <a class="navbar-brand" href="#">Billing Counter!</a>
+      <span class="navbar-text ml-auto">{{ date }} 
+      <span id="clockk"></span>
+      </span>
+    </header>
+    <div class="container-fluid p-3" >
+    <div>
+      {% if patient is not None %}
+      <pre>This all patients are requested to pay their bill!</pre>
+      <table class="table table-bordered table-hover table-sm">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Bill Paid link</th>
+          </tr>
+        <thead>
+      {% for item in patient %}
+        <tbody>
+          <tr>
+            <td scope="row">{{ forloop.counter }}</td>
+            <td>{{ item.patient.name }}</td>
+            <td>{{ item.patient.phno }}</td>
+            <td><a href=""> Paid </a></td>
+          </tr>
+        </tbody> 
+      {% endfor %}
+      </table>
+    </div>  
+    {% else %}
+      <h1>No patients for Billing</h1>
+    {% endif %}
 
     <script src="{% static 'billing/js/clock.js' %}">
     </script>
-   
+   </div>
 
   </body>
 </html>

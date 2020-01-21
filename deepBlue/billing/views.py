@@ -1,12 +1,13 @@
 from django.shortcuts import render, HttpResponse
 from datetime import datetime
+from .models import billingQueue
 
 # Create your views here.
 def generateBill(request):
-    patient_name = "Unknown"
+    patient = billingQueue.objects.all()
     date = datetime.now().strftime("%d/%m/20%y")
-    print(patient_name, date)
-    return render(request,'billing.html',{'p_name':patient_name,'date':date})
+    context =  {'patient':patient,'date':date}
+    return render(request,'billing.html',context=context)
 
 def patientView(request):
     return HttpResponse('Billing Queue')
