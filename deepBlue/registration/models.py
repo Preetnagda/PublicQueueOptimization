@@ -20,6 +20,7 @@ class doctor(models.Model):
     email_id = models.EmailField()
     speciality = models.CharField(choices = CHOICES,max_length=20)
     feePerPatient = models.DecimalField(max_digits=10,decimal_places=2)
+    followUpFee = models.DecimalField(max_digits=10,decimal_places=2,default=100)
 
 class appointmentQueue(models.Model):
     date_time = models.DateTimeField(default=datetime.datetime.now())
@@ -29,3 +30,5 @@ class appointmentQueue(models.Model):
     predicted_time = models.DecimalField(max_digits=10,decimal_places=1)
     actual_time = models.DecimalField(max_digits=10,decimal_places=1,null=True,blank=True,default=None) #time_in_q  time_out - time_in
     consultation_time_in=models.DateTimeField(default=datetime.datetime.now())
+    isFollowUp = models.BooleanField(default=False)
+

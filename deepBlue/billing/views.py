@@ -7,6 +7,8 @@ def generateBill(request):
     patient = billingQueue.objects.all()
     date = datetime.now().strftime("%d/%m/20%y")
     context =  {'patient':patient,'date':date}
+    for patients in patient:    
+        print(patients.billAmount)
     return render(request,'billing.html',context=context)
 
 def patientView(request):

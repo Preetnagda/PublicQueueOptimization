@@ -1,8 +1,11 @@
 from registration import models
 from queueAlgorithms import algorithms
+from queueAlgorithms.models import appointmentRecords
 
-def getOptimalDoctor(type_of_medication):
+def getOptimalDoctor(type_of_medication,patientPhoneNumber):
     CHOICES = models.doctor.CHOICES
+    #Get all patient entry with provided ph no
+    patientInstance = models.appointmentRecords.objects.filter(phno=patientPhoneNumber)
     for choice in CHOICES:
         if(choice[1]==type_of_medication):
             type_of_medication = choice[0]

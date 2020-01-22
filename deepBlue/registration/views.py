@@ -19,7 +19,7 @@ def register(request):
         ptname = request.POST["patient_name"]
         ptno = request.POST["ptphno"]
         tom = request.POST["type_of_medication"]
-        doc = methods.getOptimalDoctor(tom)
+        doc = methods.getOptimalDoctor(tom,ptphno)
         if doc is not -1:
             estimatedTime = algorithms.getDoctor_OverallEstimatedTime(doc)
             # check duplicate patients later
