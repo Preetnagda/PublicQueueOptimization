@@ -15,6 +15,7 @@ class doctor(models.Model):
     )
 
     timepp = models.DecimalField(max_digits=10,decimal_places=1)
+    timefpp = models.DecimalField(max_digits=10,decimal_places=1)
     name = models.CharField(max_length=100)
     phno = models.CharField(max_length=10)
     email_id = models.EmailField()
@@ -30,5 +31,5 @@ class appointmentQueue(models.Model):
     predicted_time = models.DecimalField(max_digits=10,decimal_places=1)
     actual_time = models.DecimalField(max_digits=10,decimal_places=1,null=True,blank=True,default=None) #time_in_q  time_out - time_in
     consultation_time_in=models.DateTimeField(default=datetime.datetime.now())
-    isFollowUp = models.BooleanField(default=False)
+    is_follow_up = models.BooleanField(default=False)
 
