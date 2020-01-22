@@ -30,7 +30,10 @@ def patient_exit(request):
     new_record.consultation_time = new_record.consultation_out - new_record.consultation_time_in
     new_record.save()
     new_billing_record = billingQueue()
-    new_billing_record.billAmount = current_patient.doctor_required.feePerPatient
+    if current_patient.is_follow_up is False :
+        new_billing_record.billAmount = current_patient.doctor_required.feePerPatient
+    else :
+        new_billing_record.billAmount = current_patient.doctor_required.followUpFee
     new_billing_record.patient = current_patient.patient
     new_billing_record.date_time = datetime.now(timezone.utc)
     new_billing_record.doctor = current_patient.doctor_required
