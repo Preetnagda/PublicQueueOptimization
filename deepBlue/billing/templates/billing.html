@@ -24,7 +24,7 @@
       <span id="clockk"></span>
       </span>
     </header>
-    <div class="container-fluid p-3" >
+    <div class="container p-3" >
     <div>
       {% if patient is not None %}
       <pre>This all patients are requested to pay their bill!</pre>
@@ -34,15 +34,17 @@
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Phone Number</th>
+            <th scope="col">Billing Amount</th>
             <th scope="col">Bill Paid link</th>
           </tr>
         <thead>
-      {% for item in patient %}
+      {% for patients in patient %}
         <tbody>
           <tr>
             <td scope="row">{{ forloop.counter }}</td>
-            <td>{{ item.patient.name }}</td>
-            <td>{{ item.patient.phno }}</td>
+            <td>{{ patients.patient.name }}</td>
+            <td>{{ patients.patient.phno }}</td>
+            <td>{{ patients.billAmount }}</td>
             <td><a href=""> Paid </a></td>
           </tr>
         </tbody> 

@@ -19,7 +19,15 @@ def register(request):
         ptname = request.POST["patient_name"]
         ptno = request.POST["ptphno"]
         tom = request.POST["type_of_medication"]
-        doc = methods.getOptimalDoctor(tom)
+        ifFollowUp = methods.checkIfFollowUp(ptno)
+        isFollowUpBoolean = False
+        if ifFollowUp is not -1 :
+            doc = models.doctor.objects.filter(id=ifFollowUp)[0]
+            isFollowUpBoolean = True
+            print(isFollowUpBoolean)
+        else:
+            doc = methods.getOptimalDoctor(tom)
+
         if doc is not -1:
             estimatedTime = algorithms.getDoctor_OverallEstimatedTime(doc)
             # check duplicate patients later
@@ -30,7 +38,8 @@ def register(request):
                 patient = newPatient,
                 doctor_required = doc,
                 predicted_time = estimatedTime,
-                time_in = now
+                time_in = now,
+                is_follow_up = isFollowUpBoolean
             )
             queueEntry.save()
             request.session['current_Patient'] = newPatient.id
