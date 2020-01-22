@@ -8,13 +8,15 @@
   </head>
   <body onload="loaded()">
     <p id="pass"></p>
-    <form  method="post">
+    <form  method="post" style="margin-left:10px; margin-right:10px;">
+    <fieldset>
+      <legend>Registration Information:</legend>
       {% csrf_token %}
       Patient Full Name :
-      <input type="text" name="patient_name" required>
+      <input type="text" name="patient_name" placeholder="e.g.:John Doe" required>
       <br><br>
       Phone Number :
-      <input type="number" name="ptphno" required>
+      <input type="number" name="ptphno" placeholder="e.g.:123*******" required>
       <br><br>
       Type of medication :
       <select name="type_of_medication" id="type_of_medication" onchange="tomChanged()" required>
@@ -23,7 +25,8 @@
         {% endfor %}
       </select>
       <br><br>
-      <input type="submit" name="" value="Submit">
+      <input type="submit" name="" value="Submit"  style="onhover align:center; width:50%; height:40px; color:rgb(255, 255, 255); background:rgb(175, 175, 175);"><br><br>
+    </fieldset>
     </form>
     <script src="{% static "registration/js/registrationForm.js" %}" charset="utf-8"></script>
     <script
@@ -32,3 +35,64 @@
   crossorigin="anonymous"></script>
   </body>
 </html>
+
+<style>
+  *{
+  	margin: 0;
+  	padding: 0;
+  	font-family: "Open Sans", sans-serif;
+  	text-decoration: none;
+  	list-style: none;
+    }
+  body,html{
+  	      height: 100%;
+  	      margin: 0;
+  	     }
+  form{
+    text-align: center;
+      }
+  input[type=text], input[type=number]{
+    width: 100%;
+
+  }
+  	#bg{
+  		background-image: url(backp1.png);
+  		background-repeat: repeat;
+  	    background-size:100% 100%;
+  	    }
+  	#font{
+  		font-family: sans-serif;
+  		color:rgb(255, 0, 0);
+  	   }
+    input[type=text], input[type=password], input[type=Date], input[type=number], input[type=email]{
+     width: 98%;
+     padding: 12px 20px;
+     margin: 8px 0;
+     display: inline-block;
+     border: 1px solid #ccc;
+     box-sizing: border-box;
+     margin-left: 5px;
+     margin-right: 5px;
+   }
+
+   /* Set a style for all buttons */
+   button {
+     background-color: #4CAF50;
+     color: white;
+     border: none;
+     cursor: pointer;
+
+   }
+
+   button:hover {
+     opacity: 0.8;
+   }
+
+@media (max-height:800px){
+ footer { position: static; }
+ header { padding-top:40px; }
+}
+* {
+  box-sizing: border-box;
+}
+</style>
