@@ -19,12 +19,18 @@
   <body onLoad="startTime()">
 
     <header class="navbar navbar-expand sticky-top navbar-light bg-light">
-      <a class="navbar-brand" href="#">Billing Counter!</a>
+
+      <a class="navbar-brand" href="#">
+    <img src="{% static 'img/hospital.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+    City Hospital
+    </a>
+      
       <span class="navbar-text ml-auto">{{ date }} 
       <span id="clockk"></span>
       </span>
     </header>
     <div class="container p-3" >
+    <h3>Billing Counter</h3>
     <div>
       {% if patient is not None %}
       <pre>This all patients are requested to pay their bill!</pre>
