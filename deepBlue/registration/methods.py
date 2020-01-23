@@ -24,7 +24,7 @@ def getOptimalDoctor(type_of_medication):
 def checkIfFollowUp(patientPhoneNumber):
     #get patient id
     pWithSameNumber = patient.objects.filter(phno=patientPhoneNumber).last()
-    print(pWithSameNumber.phno)
+    
     if pWithSameNumber is not None:
         patientId = pWithSameNumber.id
         #Get all patient entry with provided ph no
