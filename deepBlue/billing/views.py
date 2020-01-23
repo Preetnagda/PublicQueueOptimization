@@ -19,5 +19,5 @@ def patientView(request):
     if(patientQueueStatus.count() == 0):
         return redirect('../')
     else:
-        estimatedTime = algorithms.getPatientBillingQueueEstimatedTime(patient)
-        return HttpResponse(estimatedTime)
+        queueStatus = algorithms.getPatientBillingQueueEstimatedTime(patient)
+        return render(request,'patientsView.html',context = {'queueStatus' : queueStatus})
