@@ -52,9 +52,9 @@ def populatePatient(n=50):
 #                                         )[0]
 #             print(newappointmentRecord.time_in)
 
-def populateAppointmentRecords(days=30):
+def populateAppointmentRecords(days=300):
     newDate = datetime.datetime.now()
-    newDate = newDate - timedelta(days = 30)
+    newDate = newDate - timedelta(days = 300)
     entries = 1
     day = 0
 
@@ -74,19 +74,32 @@ def populateAppointmentRecords(days=30):
         for entry in range(entries):
             newDate = newDate+timedelta(minutes = 5)
             queuePatient = patient.objects.filter(id=random.randrange(1,50))[0]
-            queueDoctor = doctor.objects.filter(id=1)[0]
+            queueDoctor = doctor.objects.filter(id=2)[0]
             queuePredictedTime = random.uniform(5.00,15.00)
             actualPredictedTime = random.uniform(5.00,15.00)
             queuePredictedTimeInteger = int(queuePredictedTime)
             queuePredictedTimeDecimal = queuePredictedTime - int(queuePredictedTime)
             queueTimeIn = newDate + timedelta(minutes = queuePredictedTimeInteger, seconds = queuePredictedTimeDecimal*60)
             queueConsultationIn = queueTimeIn + timedelta(minutes=actualPredictedTime)
+            is_follow_up = random.choice([True, False])
+            
             if todaysDay == 2:
-                consultaionTime = random.uniform(5.00,7.00)
+                if(is_follow_up==True):
+                    consultaionTime = random.uniform(7.00,9.00)
+                else:
+                    consultaionTime = random.uniform(9.00,11.00)
+
             elif todaysDay == 1:
-                consultaionTime = random.uniform(8.00,9.00)
+                if(is_follow_up==True):
+                    consultaionTime = random.uniform(7.00,8.00)
+                else:
+                    consultaionTime = random.uniform(8.00,9.00)
+
             elif todaysDay == 0:
-                consultaionTime = random.uniform(10.00,14.00)
+                if(is_follow_up==True):
+                    consultaionTime = random.uniform(8.00,12.00)
+                else:
+                    consultaionTime = random.uniform(12.00,16.00)
 
             queueConsultationOut = queueConsultationIn + timedelta(minutes=consultaionTime)
 
@@ -98,7 +111,8 @@ def populateAppointmentRecords(days=30):
                                         time_in=queueTimeIn,
                                         consultation_in=queueConsultationIn,
                                         consultation_out=queueConsultationOut,
-                                        consultation_time=consultaionTime
+                                        consultation_time=consultaionTime,
+                                        is_follow_up=is_follow_up,
                                         )[0]
             print(newappointmentRecord.time_in)
 

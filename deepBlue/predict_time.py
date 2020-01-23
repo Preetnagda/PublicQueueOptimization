@@ -37,7 +37,8 @@ def test_stationarity(timeseries):
     print (dfoutput)
 
 
-data = pd.read_csv('appointmentRec(1).csv')
+data = pd.read_csv('c.csv')
+d=data[data['is_follow_up']==True]
 d=pd.DatetimeIndex(data['consultation_in'])
 data['day']=d.day
 data['day_of_the_week']=d.dayofweek
@@ -51,7 +52,7 @@ data = data.set_index(pd.DatetimeIndex(data['consultation_in']))
 
 resampled_data=data.resample("1D").mean() 
 print(resampled_data)
-plt.hist(d.date)
+
 resampled_data.fillna(resampled_data.interpolate(),inplace=True)
 
 #plt.plot(resampled_data)
