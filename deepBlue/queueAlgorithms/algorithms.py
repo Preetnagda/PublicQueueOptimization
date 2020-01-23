@@ -42,3 +42,19 @@ def getGeneralBillingQueueEstimatedTime():
         else:
             estimatedTime = estimatedTime + 5
     return estimatedTime
+
+def getPatientBillingQueueEstimatedTime(patient):
+    totalPatientsInQueue = billingQueue.objects.all()
+    patientTimeInQueue = billingQueue.objects.filter(patient=patient)[0].date_time
+    patientsAhead = 0
+    estimatedTime = 0
+    for patientsInQueue from totalPatientsInQueue:
+        if( patientsInQueue.date_time > patientTimeInQueue ):
+            patientsAhead = patientAhead + 1
+            if(patientsInQueue.isCash):
+                estimatedTime = estimatedTime + 10
+            else:
+                estimatedTime = estimatedTime + 5
+
+    data = {'estimatedTime': estimatedTime, 'patientsAhead': patientsAhead}
+    return (data)

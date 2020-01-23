@@ -85,7 +85,7 @@ DATABASES = {
         'NAME': 'deepBlueHospital',
 
         'USER': 'postgres',
-        'PASSWORD': 'root1234',
+        'PASSWORD': '6204',
 
         'HOST':'localhost',
 
