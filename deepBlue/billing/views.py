@@ -15,7 +15,8 @@ def generateBill(request):
 def patientView(request):
     patient = request.session["current_Patient"]
     # Check if patient is not in queue
-    if(billingQueue.objects.filter(patient).count == 0):
+    patientQueueStatus = billingQueue.objects.filter(patient=patient)
+    if(patientQueueStatus.count() == 0):
         return redirect('../')
     else:
         estimatedTime = algorithms.getPatientBillingQueueEstimatedTime(patient)
