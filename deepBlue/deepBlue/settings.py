@@ -82,22 +82,24 @@ WSGI_APPLICATION = 'deepBlue.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+<<<<<<< HEAD
         'NAME': 'deepBlueHospital',
 
         'USER': 'postgres',
         'PASSWORD': '6204',
 
-        'HOST':'localhost',
-
-        """
-        'USER': 'postgres',
+=======
+        'NAME': 'deepBluehospital',
+       ''' 'USER': 'postgres',
         'PASSWORD': 'root1234',
+>>>>>>> 1b02ce855eea1764c18b13c720438262245ec250
+        'HOST':'localhost',
+        'USER': 'postgres',
+        'PASSWORD': 'root1234','''
         'HOST':'localhost',
         'USER': 'yash',
         'PASSWORD': 'yashmeet',
-        'HOST': '25.57.43.180',
-        """
-
+        
         'PORT':'5432',
     }
 }
