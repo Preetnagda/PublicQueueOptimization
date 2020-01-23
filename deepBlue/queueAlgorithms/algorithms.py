@@ -48,7 +48,7 @@ def getPatientBillingQueueEstimatedTime(patient):
     patientTimeInQueue = billingQueue.objects.filter(patient=patient)[0].date_time
     patientsAhead = 0
     estimatedTime = 0
-    for patientsInQueue from totalPatientsInQueue:
+    for patientsInQueue in totalPatientsInQueue:
         if( patientsInQueue.date_time > patientTimeInQueue ):
             patientsAhead = patientAhead + 1
             if(patientsInQueue.isCash):
