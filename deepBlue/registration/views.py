@@ -21,7 +21,7 @@ def register(request):
         tom = request.POST["type_of_medication"]
         ifFollowUp = methods.checkIfFollowUp(ptno)
         isFollowUpBoolean = False
-        if ifFollowUp is not -1 :
+        if ifFollowUp is not None :
             doc = models.doctor.objects.filter(id=ifFollowUp)[0]
             isFollowUpBoolean = True
             print(isFollowUpBoolean)

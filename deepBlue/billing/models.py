@@ -9,5 +9,5 @@ class billingQueue(models.Model):
     date_time = models.DateTimeField(default=datetime.datetime.now())
     doctor = models.ForeignKey(registration_models.doctor,on_delete=models.CASCADE)
     predicted_time = models.DecimalField(max_digits=10,decimal_places=1)
-
+    isCash = models.BooleanField(default=True)
 

@@ -35,5 +35,10 @@ def calculateDoctorTimePerPatient(latest_Time,doctor):
 
 def getGeneralBillingQueueEstimatedTime():
     billing_queue = billingQueue.objects.all()
-    estimatedTime = billing_queue.count()*4
+    estimatedTime = 0
+    for patients in billing_queue:
+        if(patients.isCash):
+            estimatedTime = estimatedTime + 10
+        else:
+            estimatedTime = estimatedTime + 5
     return estimatedTime
