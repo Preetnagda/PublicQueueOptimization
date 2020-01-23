@@ -14,9 +14,29 @@ register_matplotlib_converters()
 #from sklearn.cross_validation import train_test_split
 
 from statsmodels.tsa.stattools import adfuller
-
+def test_stationarity(timeseries):
     
-   
+    #Determing rolling statistics
+    rolmean = timeseries.rolling(60).mean()
+    rolstd = timeseries.rolling(60).std()
+
+    #Plot rolling statistics:
+    orig = plt.plot(timeseries,color='blue',label='Original')
+    mean = plt.plot(rolmean, color='red', label='Rolling Mean')
+    std = plt.plot(rolstd, color='black', label = 'Rolling Std')
+    plt.legend(loc='best')
+    plt.title('Rolling Mean & Standard Deviation')
+    plt.show(block=False)
+    
+    #Perform Dickey-Fuller test:
+    print ('Results of Dickey-Fuller Test:')
+    dftest = adfuller(timeseries, autolag='AIC')
+    dfoutput = pd.Series(dftest[0:4], index=['Test Statistic','p-value','#Lags Used','Number of Observations Used'])
+    for key,value in dftest[4].items():
+        dfoutput['Critical Value (%s)'%key] = value
+    print (dfoutput)
+
+
 data = pd.read_csv('c.csv')
 d=data[data['is_follow_up']==True]
 d=pd.DatetimeIndex(data['consultation_in'])
@@ -25,13 +45,14 @@ data['day_of_the_week']=d.dayofweek
 data['date']=d.date
 data['month']=d.month
 print(d.date)
+#data=data[(data['month']== 12) & (data['day']==2)]
 data = data.set_index(pd.DatetimeIndex(data['consultation_in']))
-
+#data=data['2019-11-01':'2019-12-15']
 
 
 resampled_data=data.resample("1D").mean() 
 print(resampled_data)
- 
+
 resampled_data.fillna(resampled_data.interpolate(),inplace=True)
 
 #plt.plot(resampled_data)
