@@ -2,6 +2,8 @@ from django.shortcuts import render, HttpResponse,redirect
 from datetime import datetime
 from .models import billingQueue
 from queueAlgorithms import algorithms
+from django.views.decorators.http import require_http_methods
+from django.http import JsonResponse
 
 # Create your views here.
 def generateBill(request):
@@ -21,3 +23,11 @@ def patientView(request):
     else:
         queueStatus = algorithms.getPatientBillingQueueEstimatedTime(patient)
         return render(request,'patientsView.html',context = {'queueStatus' : queueStatus})
+
+@require_http_methods(["GET"])
+def getPatientPos(request):
+    if(request.session.get('current_Patient',None)):
+        print("billing :")
+        patient = request.session["current_Patient"]
+        patientQueueStatus = algorithms.getPatientBillingQueueEstimatedTime(patient)
+        return JsonResponse(patientQueueStatus)

@@ -37,7 +37,7 @@ def patient_exit(request):
     new_billing_record.patient = current_patient.patient
     new_billing_record.date_time = datetime.now(timezone.utc)
     new_billing_record.doctor = current_patient.doctor_required
-    new_billing_record.predicted_time = algorithms.getGeneralBillingQueueEstimatedTime()
+    new_billing_record.predicted_time = algorithms.getGeneralBillingQueueEstimatedTime()['expected_time']
     new_billing_record.save()
     current_patient.delete()
     return redirect('doctor')
