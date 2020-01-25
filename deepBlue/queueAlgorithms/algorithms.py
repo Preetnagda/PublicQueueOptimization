@@ -36,12 +36,15 @@ def calculateDoctorTimePerPatient(latest_Time,doctor):
 def getGeneralBillingQueueEstimatedTime():
     billing_queue = billingQueue.objects.all()
     estimatedTime = 0
+    patientsAhead = 0
     for patients in billing_queue:
+        patientsAhead = patientsAhead + 1
         if(patients.isCash):
             estimatedTime = estimatedTime + 10
         else:
             estimatedTime = estimatedTime + 5
-    return estimatedTime
+    data = {'expected_time': estimatedTime, 'patAhead': patientsAhead}
+    return data
 
 def getPatientBillingQueueEstimatedTime(patient):
     totalPatientsInQueue = billingQueue.objects.all()
@@ -50,11 +53,12 @@ def getPatientBillingQueueEstimatedTime(patient):
     estimatedTime = 0
     for patientsInQueue in totalPatientsInQueue:
         if( patientsInQueue.date_time > patientTimeInQueue ):
-            patientsAhead = patientAhead + 1
+            patientsAhead = patientsAhead + 1
             if(patientsInQueue.isCash):
                 estimatedTime = estimatedTime + 10
             else:
                 estimatedTime = estimatedTime + 5
 
-    data = {'estimatedTime': estimatedTime, 'patientsAhead': patientsAhead}
+    data = {'expected_time': estimatedTime, 'patAhead': patientsAhead}
+    print(data)
     return (data)
