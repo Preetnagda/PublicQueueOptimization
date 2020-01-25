@@ -5,7 +5,8 @@ from .models import billingQueue
 from queueAlgorithms import models as records
 from registration import models as patients
 from queueAlgorithms import algorithms
-
+from django.views.decorators.http import require_http_methods
+from django.http import JsonResponse
 from django.core import serializers
 
 # Create your views here.
@@ -17,9 +18,7 @@ def generateBill(request):
         print(patients.billAmount)
 
     return render(request,'billing.html',context=context)
-=======
-from django.views.decorators.http import require_http_methods
-from django.http import JsonResponse
+
 
 # Create your views here.
 def generateBill(request):
@@ -52,7 +51,6 @@ def generateBill(request):
         date = datetime.now().strftime("%d/%m/20%y")
         context =  {'patient':patient,'date':date}
         return render(request,'billing.html',context=context)
->>>>>>> cd0ca47cef7c8735e2cb6a5080f58c8774fea332
 
 def patientView(request):
     patient = request.session["current_Patient"]
@@ -80,9 +78,6 @@ def updatetable(request):
     context =  {'patient':patient,'date':date}
     return render(request,'moredata.html',context=context)
 
-
-
-
 @require_http_methods(["GET"])
 def getPatientPos(request):
     if(request.session.get('current_Patient',None)):
@@ -90,4 +85,3 @@ def getPatientPos(request):
         patient = request.session["current_Patient"]
         patientQueueStatus = algorithms.getPatientBillingQueueEstimatedTime(patient)
         return JsonResponse(patientQueueStatus)
->>>>>>> cd0ca47cef7c8735e2cb6a5080f58c8774fea332
