@@ -28,7 +28,9 @@
       <span id="clockk"></span>
       </span>
     </header>
+    <!-- End of Header -->
 
+    <!-- Body -->
     <div class="container p-3" >
     <h3>Billing Counter</h3>
     <div>
@@ -41,17 +43,17 @@
             <th scope="col">Name</th>
             <th scope="col">Phone Number</th>
             <th scope="col">Billing Amount</th>
-            <th scope="col">Bill Paid link</th>
+            <th scope="col">Payment link</th>
           </tr>
         <thead>
       {% for patients in patient %}
         <tbody>
           <tr>
-            <td scope="row">{{ forloop.counter }}</td>
+            <td scope="row" class="modal_id">{{ forloop.counter }}</td>
             <td class="modal_name">{{ patients.patient.name }}</td>
             <td class="modal_phno">{{ patients.patient.phno }}</td>
             <td class="modal_amt">{{ patients.billAmount }}</td>
-            <td data-target="#myModal"  data-toggle="modal">Pay Bill</td>
+            <td data-target="#myModal"  data-toggle="modal" class="text-primary">Pay Bill</td>
           </tr>
         </tbody> 
       {% endfor %}
@@ -61,9 +63,10 @@
       <h1>No patients for Billing</h1>
     {% endif %}
    </div>
+   <!-- End of Body -->
  
     <!-- Modal -->
-    <div id="myModal"class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div id="myModal"class="modal fade" id="exampleModalCente r" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -74,7 +77,14 @@
           </div>
           <div class="modal-body">
             <pre>Please verify the patient details</pre>
-                <form>
+                <form id="billingform" method="post">
+                  {% csrf_token %}
+                  <div class="form-group row">
+                    <label for="id" class="col-sm-4 col-form-label"># :</label>
+                    <div class="col-sm-8">
+                      <input type="text" readonly class="form-control-plaintext modal_id" id="id" value="--">
+                    </div>
+                  </div>
                   <div class="form-group row">
                     <label for="name" class="col-sm-4 col-form-label">Name :</label>
                     <div class="col-sm-8">
@@ -84,7 +94,7 @@
                   <div class="form-group row">
                     <label for="phone_no" class="col-sm-4 col-form-label">Phone No :</label>
                     <div class="col-sm-8">
-                      <input type="text" readonly class="form-control-plaintext modal_phno" id="phone_no" value="--">
+                      <input type="text" readonly class="form-control-plaintext modal_phno" id="phone_no" name="patient_phno"value="--">
                     </div>
                   </div>
                   <div class="form-group row">
@@ -110,7 +120,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-dark" data-dismiss="modal">Back</button>
-            <button type="button submit" class="btn btn-success">Bill Paid !</button>
+            <button type="submit" class="btn btn-success">Bill Paid !</button>
           </div>
           </form>
         </div>
@@ -118,21 +128,22 @@
     </div>
     <script>
       $('#myModal').on('show.bs.modal', function (e) {
-    // do something...
-    console.log('Modal Opened!');
-    var _td = $(e.relatedTarget);
-    var _tr = _td.parents("tr");
-    //console.log(_tr);
-    var _name = _tr.find(".modal_name").text();
-    var _phno = _tr.find(".modal_phno").text();
-    var _billamt = _tr.find(".modal_amt").text();
-    console.log("Billing Details :",_name,_phno,_billamt);
+        // do something...
+        console.log('Modal Opened!');
+        var _td = $(e.relatedTarget);
+        var _tr = _td.parents("tr");
+        //console.log(_tr);
+        var _id = _tr.find(".modal_id").text();
+        var _name = _tr.find(".modal_name").text();
+        var _phno = _tr.find(".modal_phno").text();
+        var _billamt = _tr.find(".modal_amt").text();
+        console.log("Billing Details :",_name,_phno,_billamt);
 
-    $(this).find(".modal_name").val(_name);
-    $(this).find(".modal_phno").val(_phno);
-    $(this).find(".modal_amt").val(_billamt);
-
-  })
+        $(this).find(".modal_id").val(_id);
+        $(this).find(".modal_name").val(_name);
+        $(this).find(".modal_phno").val(_phno);
+        $(this).find(".modal_amt").val(_billamt);
+      })
     </script>
 
   </body>
