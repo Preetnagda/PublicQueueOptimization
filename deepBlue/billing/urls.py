@@ -5,4 +5,5 @@ from billing import views
 urlpatterns = [
     path('counter',views.generateBill),
     path('',views.patientView),
+    path('getmoredata',views.updatetable),
 ]

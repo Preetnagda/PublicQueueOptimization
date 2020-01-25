@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
     
     <script src="{% static 'billing/js/clock.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="{% static 'billing/js/custom.js' %}"></script>
     
     <title>Billing Counter</title>
 
@@ -44,17 +46,18 @@
             <th scope="col">Bill Paid link</th>
           </tr>
         <thead>
+            <tbody>
       {% for patients in patient %}
-        <tbody>
-          <tr>
+        
             <td scope="row">{{ forloop.counter }}</td>
             <td>{{ patients.patient.name }}</td>
             <td>{{ patients.patient.phno }}</td>
             <td>{{ patients.billAmount }}</td>
             <td><a href=""> Paid </a></td>
           </tr>
-        </tbody> 
+        
       {% endfor %}
+        </tbody>
       </table>
     </div>  
     {% else %}

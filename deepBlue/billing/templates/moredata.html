@@ -1,0 +1,13 @@
+
+{% for patients in patient %}
+        <tr>
+        
+            <td scope="row">{{ forloop.counter }}</td>
+            <td>{{ patients.patient.name }}</td>
+            <td>{{ patients.patient.phno }}</td>
+            <td>{{ patients.billAmount }}</td>
+            <td><a href=""> Paid </a></td>
+
+        </tr>
+        
+  {% endfor %}
