@@ -30,10 +30,10 @@ def generateBill(request):
         newBillingRecord.billAmount = payeeInstance.billAmount
         print("::::::::::::::::::::::::::::::::::::::::")
         print(paymentoption)
-        if paymentoption == "0":
-            newBillingRecord.is_Cash=True
-        elif paymentoption == "1":
-            newBillingRecord.is_Cash=False
+        if paymentoption == "Cash":
+            newBillingRecord.isCash=True
+        elif paymentoption == "Card":
+            newBillingRecord.isCash=False
         newBillingRecord.predicted_time = payeeInstance.predicted_time
         #newBillingRecord.actual_time = newBillingRecord.date_time - payeeInstance.date_time
         newBillingRecord.save()
@@ -64,7 +64,7 @@ def updatetable(request):
     for patients in patient:
         patients.patient_name=str(patients.patient.name)
         print(patients.patient_name)
-
+   
     #patient=list(patient.values())
     print(patient)
     date = datetime.now().strftime("%d/%m/20%y")
