@@ -52,7 +52,7 @@ def getPatientBillingQueueEstimatedTime(patient):
     patientsAhead = 0
     estimatedTime = 0
     for patientsInQueue in totalPatientsInQueue:
-        if( patientsInQueue.date_time > patientTimeInQueue ):
+        if( patientsInQueue.date_time < patientTimeInQueue ):
             patientsAhead = patientsAhead + 1
             if(patientsInQueue.isCash):
                 estimatedTime = estimatedTime + 10

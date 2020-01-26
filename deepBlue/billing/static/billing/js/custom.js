@@ -1,19 +1,17 @@
-<<<<<<< HEAD
 setInterval(function() {
         $.ajax({
             type: "GET",
             url: 'getmoredata',
             dataType: "html",
-            
+
         })
         .done(function(response) {
             $('tbody').empty();
             $('tbody').append(response);
             console.log(response);
-            
+
         });
     }, 10000)
-=======
 var timer = null;
 
 function fetchdata(){
@@ -51,4 +49,3 @@ function fetchdata(){
 $(document).ready(function(){
  timer = setTimeout(fetchdata,10000);
 })
->>>>>>> cd0ca47cef7c8735e2cb6a5080f58c8774fea332
