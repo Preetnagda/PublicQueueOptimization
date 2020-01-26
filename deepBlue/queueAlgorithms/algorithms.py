@@ -48,6 +48,7 @@ def getGeneralBillingQueueEstimatedTime():
 
 def getPatientBillingQueueEstimatedTime(patient):
     totalPatientsInQueue = billingQueue.objects.all()
+    print(totalPatientsInQueue)
     patientTimeInQueue = billingQueue.objects.filter(patient=patient)[0].date_time
     patientsAhead = 0
     estimatedTime = 0
