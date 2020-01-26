@@ -22,5 +22,5 @@ class billingRecords(models.Model):
     doctor = models.ForeignKey(registration_models.doctor,on_delete=models.CASCADE)
     predicted_time = models.DecimalField(max_digits=10,decimal_places=1)
     actual_time = models.DecimalField(max_digits=10,decimal_places=1,null=True,blank=True,default=None) #time_in_q  time_out - time_in
-    is_Cash = models.BooleanField(default=True)
+    is_Cash = models.BooleanField()
     #time_in = models.ForeignKey()

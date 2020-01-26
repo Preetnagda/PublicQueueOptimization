@@ -19,14 +19,8 @@
   </head>
   <body>
     {{patient_name}}<br>
-    {% if totalPeople == 0 %}
-      <p>Go In</p>
-    {% elif totalPeople == 1 %}
-      <p>You are next</p>
-    {% else %}
       <Label>Waiting Time:</Label>
       <div id = 'expected_time'>{{expected_time}}</div>
       <div id="patAhead">{{totalPeople}}</div>
-    {% endif %}
   </body>
 </html>
