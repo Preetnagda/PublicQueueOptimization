@@ -1,12 +1,20 @@
-
+<thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Phone Number</th>
+          <th scope="col">Billing Amount</th>
+          <th scope="col">Payment link</th>
+        </tr>
+      <thead>
 {% for patients in patient %}
         <tr>
         
-            <td scope="row">{{ forloop.counter }}</td>
-            <td>{{ patients.patient.name }}</td>
-            <td>{{ patients.patient.phno }}</td>
-            <td>{{ patients.billAmount }}</td>
-            <td><a href=""> Paid </a></td>
+                <td scope="row" class="modal_id">{{ forloop.counter }}</td>
+                <td class="modal_name">{{ patients.patient.name }}</td>
+                <td class="modal_phno">{{ patients.patient.phno }}</td>
+                <td class="modal_amt">{{ patients.billAmount }}</td>
+                <td data-target="#myModal"  data-toggle="modal" class="text-primary">Pay Bill</td>
 
         </tr>
         

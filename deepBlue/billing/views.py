@@ -9,15 +9,7 @@ from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
 from django.core import serializers
 
-# Create your views here.
-def generateBill(request):
-    patient = billingQueue.objects.all()
-    date = datetime.now().strftime("%d/%m/20%y")
-    context =  {'patient':patient,'date':date}
-    for patients in patient:
-        print(patients.billAmount)
 
-    return render(request,'billing.html',context=context)
 
 
 # Create your views here.
@@ -35,9 +27,12 @@ def generateBill(request):
         newBillingRecord = records.billingRecords()
         newBillingRecord.patient = payeeInstance.patient
         newBillingRecord.doctor = payeeInstance.doctor
+        newBillingRecord.billAmount = payeeInstance.billAmount
+        print("::::::::::::::::::::::::::::::::::::::::")
+        print(paymentoption)
         if paymentoption == "Cash":
             newBillingRecord.isCash=True
-        else:
+        elif paymentoption == "Card":
             newBillingRecord.isCash=False
         newBillingRecord.predicted_time = payeeInstance.predicted_time
         #newBillingRecord.actual_time = newBillingRecord.date_time - payeeInstance.date_time
@@ -66,12 +61,10 @@ def patientView(request):
 def updatetable(request):
 
     patient = billingQueue.objects.all()
-
-
     for patients in patient:
         patients.patient_name=str(patients.patient.name)
         print(patients.patient_name)
-    print(patient[1].patient_name)
+   
     #patient=list(patient.values())
     print(patient)
     date = datetime.now().strftime("%d/%m/20%y")
