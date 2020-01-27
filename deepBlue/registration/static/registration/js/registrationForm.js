@@ -1,7 +1,4 @@
-function loaded() {
-  // alert("hello");
-  tomChanged();
-}
+
 function chooseDocClicked(){
   // doctorsList = document.getElementById("available_doctors");
   // if(document.getElementById("chooseDoc").checked){

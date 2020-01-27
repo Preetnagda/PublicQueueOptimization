@@ -25,12 +25,10 @@
     <!-- Header -->
     <header class="navbar navbar-expand navbar-light bg-light">
       <a class="navbar-brand" href="#">
-        <img src="{% static 'img/hospital.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+        <img src="{% static 'img/hospital.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
         City Hospital
       </a>
-      <span class="navbar-text ml-auto">{{ date }} 
-      <span id="clockk"></span>
-      </span>
+      <span class="navbar-text ml-auto">{{ date }} <span id="clockk"></span></span>
     </header>
     <!-- End of Header -->
 
@@ -85,16 +83,8 @@
     <!-- End of Container -->
 
     <!-- Scripts -->  
-    <script>window.onload=function(){loaded();startTime();disableSubmit();}</script>
-    <script>
-      function disableSubmit() { document.getElementById("submit").disabled = true; }
-      function activateButton(element) {
-        if(element.checked) { document.getElementById("submit").disabled = false; }
-        else{ document.getElementById("submit").disabled = true; }
-      }
-    </script>
-    <script src="{% static 'registration/js/clock.js' %}"></script>
-    <script src="{% static "registration/js/registrationForm.js" %}" charset="utf-8"></script>
+    <script>window.onload=function(){tomchanged();startTime();disableSubmit();}</script>
+    <script src="{% static 'registration/js/index.js' %}" charset="utf-8"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <!-- End of Scripts -->
   </body>
