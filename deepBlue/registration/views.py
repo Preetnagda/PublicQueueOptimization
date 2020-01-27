@@ -5,10 +5,15 @@ from django.http import HttpResponse,JsonResponse
 from queueAlgorithms import algorithms
 import datetime
 # Create your views here.
-
+def getDoctorTime(request,tom=0):
+    doc = methods.getOptimalDoctor(tom)
+    estimatedTime = None
+    if doc is not -1:
+        estimatedTime = algorithms.getDoctor_OverallEstimatedTime(doc)
+    return {'estimatedTime':estimatedTime}
 
 def checkUserStatus(request):
-    if request.session.get('current_patient',None):
+    if request.session.get('current_Patient',None):
         return redirect("../patient/")
     else:
         return redirect("/register")
@@ -19,6 +24,13 @@ def register(request):
         ptname = request.POST["patient_name"]
         ptno = request.POST["ptphno"]
         tom = request.POST["type_of_medication"]
+        duplicatePatient = models.patient.objects.filter(phno = ptno)
+        newPatient = None
+        if(duplicatePatient.count() != 0):
+            newPatient = duplicatePatient[0]
+        else:
+            newPatient = models.patient(name=ptname,phno=ptno)
+            newPatient.save()
         ifFollowUp = methods.checkIfFollowUp(ptno)
         isFollowUpBoolean = False
         if ifFollowUp is not None :
@@ -27,12 +39,9 @@ def register(request):
             print(isFollowUpBoolean)
         else:
             doc = methods.getOptimalDoctor(tom)
-
         if doc is not -1:
             estimatedTime = algorithms.getDoctor_OverallEstimatedTime(doc)
             # check duplicate patients later
-            newPatient = models.patient(name=ptname,phno=ptno)
-            newPatient.save()
             now = datetime.datetime.now()
             queueEntry = models.appointmentQueue(
                 patient = newPatient,
@@ -44,7 +53,7 @@ def register(request):
             queueEntry.save()
             request.session['current_Patient'] = newPatient.id
             return redirect("../patient/")
-            
+
     types_of_medication = models.doctor.CHOICES
     context={"types_of_medication":types_of_medication}
     return render(request,"registration/directRegistration.html",context)

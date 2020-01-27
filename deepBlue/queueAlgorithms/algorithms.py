@@ -13,12 +13,8 @@ def getDoctor_PatientEstimatedTime(patient,doctor):
             print("Current Patient " + pats.patient.name)
             currentPatientInTime = pats.time_in
             break
-
-    print(currentPatientInTime)
     time_now=timezone.now()
-
     for pats in q_details:
-
         if(currentPatientInTime > pats.time_in and pats.patient!=patient):
             patientAhead=patientAhead+1
 
@@ -27,10 +23,11 @@ def getDoctor_PatientEstimatedTime(patient,doctor):
 
 def getDoctor_OverallEstimatedTime(doctor):
     timepp=doctor.timepp
-    return 10
+    patientInDoctorQueue = registration_models.appointmentQueue.objects.filter(doctor_required = doctor)
+    expectedTime = patientInDoctorQueue.count()*timepp
+    return expectedTime
 
 def calculateDoctorTimePerPatient(latest_Time,doctor):
-
     return 10
 
 def getGeneralBillingQueueEstimatedTime():
@@ -49,17 +46,19 @@ def getGeneralBillingQueueEstimatedTime():
 def getPatientBillingQueueEstimatedTime(patient):
     totalPatientsInQueue = billingQueue.objects.all()
     print(totalPatientsInQueue)
-    patientTimeInQueue = billingQueue.objects.filter(patient=patient)[0].date_time
-    patientsAhead = 0
-    estimatedTime = 0
-    for patientsInQueue in totalPatientsInQueue:
-        if( patientsInQueue.date_time < patientTimeInQueue ):
-            patientsAhead = patientsAhead + 1
-            if(patientsInQueue.isCash):
-                estimatedTime = estimatedTime + 10
-            else:
-                estimatedTime = estimatedTime + 5
+    try:
+        patientTimeInQueue = billingQueue.objects.filter(patient=patient)[0].date_time
+        patientsAhead = 0
+        estimatedTime = 0
+        for patientsInQueue in totalPatientsInQueue:
+            if( patientsInQueue.date_time < patientTimeInQueue ):
+                patientsAhead = patientsAhead + 1
+                if(patientsInQueue.isCash):
+                    estimatedTime = estimatedTime + 10
+                else:
+                    estimatedTime = estimatedTime + 5
 
-    data = {'expected_time': estimatedTime, 'patAhead': patientsAhead}
-    print(data)
-    return (data)
+        data = {'expected_time': estimatedTime, 'patAhead': patientsAhead}
+        return (data)
+    except:
+        return (None)
