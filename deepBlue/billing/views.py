@@ -57,7 +57,6 @@ def patientView(request):
         return redirect('../')
 
 def updatetable(request):
-
     patient = billingQueue.objects.all()
     for patients in patient:
         patients.patient_name=str(patients.patient.name)

@@ -3,7 +3,7 @@ from django.views.decorators.http import require_POST
 from registration import models,methods
 from django.http import HttpResponse,JsonResponse
 from queueAlgorithms import algorithms
-import datetime
+import datetime 
 # Create your views here.
 def getDoctorTime(request,tom=0):
     doc = methods.getOptimalDoctor(tom)
@@ -55,5 +55,6 @@ def register(request):
             return redirect("../patient/")
 
     types_of_medication = models.doctor.CHOICES
-    context={"types_of_medication":types_of_medication}
+    date = datetime.datetime.now().strftime("%d/%m/20%y")
+    context={"types_of_medication":types_of_medication,"date":date}
     return render(request,"registration/directRegistration.html",context)

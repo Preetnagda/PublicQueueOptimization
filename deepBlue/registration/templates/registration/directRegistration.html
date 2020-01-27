@@ -7,16 +7,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- script imports --> 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> 
-  
+    <!-- script imports -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
     <!-- bootstrap imports -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  
+
     <!-- static imports -->
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">   
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
 
   </head>
 
@@ -25,12 +25,10 @@
     <!-- Header -->
     <header class="navbar navbar-expand navbar-light bg-light">
       <a class="navbar-brand" href="#">
-        <img src="{% static 'img/hospital.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+        <img src="{% static 'img/hospital.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
         City Hospital
       </a>
-      <span class="navbar-text ml-auto">{{ date }} 
-      <span id="clockk"></span>
-      </span>
+      <span class="navbar-text ml-auto">{{ date }} <span id="clockk"></span></span>
     </header>
     <!-- End of Header -->
 
@@ -41,25 +39,25 @@
       <form method="post">
         {% csrf_token %}
         <pre>Please enter your details for registration!</pre>
-            
+
         <div class="form-group row">
           <label for="patient_name" class="col-sm-3 col-form-label">Name :</label>
           <div class="col-sm-8">
             <input type="text" name="patient_name" class="form-control" id="patient_name" placeholder="Enter your name" required>
           </div>
-        </div>      
-                      
+        </div>
+
         <div class="form-group row">
           <label for="ptphno" class="col-sm-3 col-form-label">Phone No :</label>
           <div class="col-sm-8">
-            <input type="number" name="ptphno" class="form-control" id="ptphno" placeholder="Enter your phone number" required>                  
+            <input type="number" name="ptphno" class="form-control" id="ptphno" placeholder="Enter your phone number" required>
           </div>
         </div>
-               
+
         <div class="form-group row">
           <label for="type_of_medication" class="col-sm-3 col-form-label">Speciality :</label>
-          <div class="dropdown col-sm-8">                        
-            <select class="form-control" name="type_of_medication" id="type_of_medication" onchange="tomChanged()" required>                       
+          <div class="dropdown col-sm-8">
+            <select class="form-control" name="type_of_medication" id="type_of_medication"  required>
               {% for types in types_of_medication %}
               <option value="{{types.0}}">{{types.1}}</option>
               {% endfor %}
@@ -74,27 +72,20 @@
             </div>
           </div>
         </div>
-                  
+
         <div class="row">
           <div class="col-sm-3"></div>
             <button type="submit" name="submit" id="submit" class="btn btn-success ml-3 mr-3 col-sm-4">Submit !</button>
         </div>
-      </form> 
+      </form>
 
     </div>
     <!-- End of Container -->
 
-    <!-- Scripts -->  
-    <script>window.onload=function(){loaded();startTime();disableSubmit();}</script>
-    <script>
-      function disableSubmit() { document.getElementById("submit").disabled = true; }
-      function activateButton(element) {
-        if(element.checked) { document.getElementById("submit").disabled = false; }
-        else{ document.getElementById("submit").disabled = true; }
-      }
-    </script>
-    <script src="{% static 'registration/js/clock.js' %}"></script>
-    <script src="{% static "registration/js/registrationForm.js" %}" charset="utf-8"></script>
+    <!-- Scripts -->
+
+    <script>window.onload=function(){startTime();disableSubmit();}</script>
+    <script src="{% static 'registration/js/index.js' %}" charset="utf-8"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <!-- End of Scripts -->
   </body>
