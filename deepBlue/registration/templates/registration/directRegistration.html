@@ -2,104 +2,81 @@
 {% load static %}
 <html lang="en" dir="ltr">
   <head>
+    
+    <title>Register</title>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- bootstrap imports -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-    <!--<style>
-      *{
-      	margin: 0;
-      	padding: 0;
-      	font-family: "Open Sans", sans-serif;
-      	text-decoration: none;
-      	list-style: none;
-        }
-      body,html{
-      	      height: 100%;
-      	      margin: 0;
-      	     }
-      form{
-        text-align: center;
-          }
-      input[type=text], input[type=number]{
-        width: 100%;
-
-      }
-      	#bg{
-      		background-image: url(backp1.png);
-      		background-repeat: repeat;
-      	    background-size:100% 100%;
-      	    }
-      	#font{
-      		font-family: sans-serif;
-      		color:rgb(255, 0, 0);
-      	   }
-        input[type=text], input[type=password], input[type=Date], input[type=number], input[type=email]{
-         width: 98%;
-         padding: 12px 20px;
-         margin: 8px 0;
-         display: inline-block;
-         border: 1px solid #ccc;
-         box-sizing: border-box;
-         margin-left: 5px;
-         margin-right: 5px;
-       }
-
-       /* Set a style for all buttons */
-       button {
-         background-color: #4CAF50;
-         color: white;
-         border: none;
-         cursor: pointer;
-
-       }
-
-       button:hover {
-         opacity: 0.8;
-       }
-
-    @media (max-height:800px){
-     footer { position: static; }
-     header { padding-top:40px; }
-    }
-    * {
-      box-sizing: border-box;
-    }
-  </style>-->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <!-- script imports --> 
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> 
+  
   </head>
-  <body onload="loaded()">
-    <p id="pass"></p>
-    <form  method="post" style="margin-left:10px; margin-right:10px;">
-    <fieldset>
-      <legend>Registration Information:</legend>
-      {% csrf_token %}
-      Patient Full Name :
-      <input type="text" name="patient_name" placeholder="e.g.:John Doe" required>
-      <br><br>
-      Phone Number :
-      <input type="number" name="ptphno" placeholder="e.g.:123*******" required>
-      <br><br>
-      Type of medication :
-      <select name="type_of_medication" id="type_of_medication" onchange="tomChanged()" required>
-        {% for types in types_of_medication %}
-          <option value="{{types.0}}">{{types.1}}</option>
-        {% endfor %}
-      </select>
-      <br><br>
-      <input type="submit" name="" value="Submit"  style="onhover align:center; width:50%; height:40px; color:rgb(255, 255, 255); background:rgb(175, 175, 175);"><br><br>
-    </fieldset>
-    </form>
+
+  <body onload="loaded() startTime()">
+
+    <!-- Header -->
+    <header class="navbar navbar-expand navbar-light bg-light">
+      <a class="navbar-brand" href="#">
+        <img src="{% static 'img/hospital.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+        City Hospital
+      </a>
+      <span class="navbar-text ml-auto">{{ date }} 
+      <span id="clockk"></span>
+      </span>
+    </header>
+    <!-- End of Header -->
+
+    <div class="container">
+      <h3 class="mt-3">Register</h3>
+         <form method="post">
+            {% csrf_token %}
+            <pre>Please enter your details for registration!</pre>
+            
+            <div class="form-group row">
+              <label for="patient_name" class="col-sm-3 col-form-label">Name :</label>
+              <div class="col-sm-8">
+                <input type="text" name="patient_name" class="form-control" id="patient_name" placeholder="Enter your name" required>
+              </div>
+            </div>      
+                      
+            <div class="form-group row">
+              <label for="ptphno" class="col-sm-3 col-form-label">Phone No :</label>
+              <div class="col-sm-8">
+                <input type="text" name="ptphno" class="form-control" id="ptphno" placeholder="Enter your phone number" required>                  
+              </div>
+            </div>
+               
+            <div class="form-group row">
+              <label for="type_of_medication" class="col-sm-3 col-form-label">Speciality :</label>
+               <div class="dropdown col-sm-8">                        
+                  <select class="form-control" name="type_of_medication" id="type_of_medication" onchange="tomChanged()" required>                       
+                    {% for types in types_of_medication %}
+                    <option value="{{types.0}}">{{types.1}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-3"></div>
+
+                  <button type="submit" name="submit" class="btn btn-success ml-3 mr-3 col-sm-4">Submit !</button>
+                  </div>
+          </form>        
+
+
+        <script src="{% static 'registration/js/clock.js' %}"></script>
     <script src="{% static "registration/js/registrationForm.js" %}" charset="utf-8"></script>
     <script
   src="https://code.jquery.com/jquery-3.4.1.min.js"
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
   crossorigin="anonymous"></script>
+  </div>
   </body>
 </html>
