@@ -10,7 +10,6 @@ def patient_view(request):
     if request.session.get('current_Patient',None):
         patient = models.patient.objects.filter(id=request.session['current_Patient'])[0]
         setQueue = models.appointmentQueue.objects.filter(patient=patient)
-        print(setQueue.count())
         if (setQueue.count() == 0):
             del request.session['current_Patient']
             request.session.modified = True
@@ -19,7 +18,7 @@ def patient_view(request):
         doc = q_details_for_curr_pat.doctor_required
         queueStatus = algorithms.getDoctor_PatientEstimatedTime(patient,doc)
         context = {"totalPeople": queueStatus["patientAhead"], "expected_time": queueStatus["estimatedTime"],"patient_name" : patient.name}
-        return render(request,'home.html',{"totalPeople": queueStatus["patientAhead"], "expected_time": queueStatus["estimatedTime"],"patient_name" : patient.name})
+        return render(request,'doc_appoint/home.html',{"totalPeople": queueStatus["patientAhead"], "expected_time": queueStatus["estimatedTime"],"patient_name" : patient.name})
     else:
         return redirect("../")
 

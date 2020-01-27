@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse,redirect
 from django.http import HttpResponse,JsonResponse
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from .models import billingQueue
 from queueAlgorithms import models as records
 from registration import models as patients
@@ -15,21 +15,19 @@ from django.core import serializers
 # Create your views here.
 def generateBill(request):
     if request.method == "POST" :
-        print("Submit button pressed")
         phnoo = request.POST["patient_phno"]
         paymentoption = request.POST["payment_option"]
-
         patient = patients.patient.objects.filter(phno=phnoo).last()
         id = patient.id
-
         payeeInstance = billingQueue.objects.filter(patient_id = id).first()
-
+        timeOfEntry = payeeInstance.date_time
+        currentTime = datetime.now(timezone.utc)
         newBillingRecord = records.billingRecords()
+        tempActualTime = timeOfEntry - currentTime
+        newBillingRecord.actual_time = (tempActualTime.total_seconds()/(24*60*60))
         newBillingRecord.patient = payeeInstance.patient
         newBillingRecord.doctor = payeeInstance.doctor
         newBillingRecord.billAmount = payeeInstance.billAmount
-        print("::::::::::::::::::::::::::::::::::::::::")
-        print(paymentoption)
         if paymentoption == "Cash":
             newBillingRecord.is_Cash=True
         elif paymentoption == "Card":
@@ -38,8 +36,6 @@ def generateBill(request):
         #newBillingRecord.actual_time = newBillingRecord.date_time - payeeInstance.date_time
         newBillingRecord.save()
         payeeInstance.delete()
-
-        print(payeeInstance.isCash)
         return redirect('/billing/counter')
     else:
         patient = billingQueue.objects.all().order_by("-id")
@@ -63,10 +59,6 @@ def updatetable(request):
     patient = billingQueue.objects.all()
     for patients in patient:
         patients.patient_name=str(patients.patient.name)
-        print(patients.patient_name)
-
-    #patient=list(patient.values())
-    print(patient)
     date = datetime.now().strftime("%d/%m/20%y")
     context =  {'patient':patient,'date':date}
     return render(request,'moredata.html',context=context)
@@ -74,7 +66,6 @@ def updatetable(request):
 @require_http_methods(["GET"])
 def getPatientPos(request):
     if(request.session.get('current_Patient',None)):
-        print("billing :")
         patient = request.session["current_Patient"]
         patientQueueStatus = algorithms.getPatientBillingQueueEstimatedTime(patient)
         return JsonResponse(patientQueueStatus)

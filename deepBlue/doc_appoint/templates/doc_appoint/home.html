@@ -13,20 +13,13 @@
       {% load static %}
     <link rel="stylesheet" href="{% static 'css/custom.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script src="{% static 'support.js' %}"></script>
+    <script src="{% static 'doc_appoint/js/support.js' %}"></script>
     <meta charset="utf-8">
     <title></title>
   </head>
   <body>
-    {{patient_name}}<br>
-    {% if totalPeople == 0 %}
-      <p>Go In</p>
-    {% elif totalPeople == 1 %}
-      <p>You are next</p>
-    {% else %}
-      <Label>Waiting Time:</Label>
-      <div id = 'expected_time'>{{expected_time}}</div>
-      <div id="patAhead">{{totalPeople}}</div>
-    {% endif %}
+      Hello {{patient_name}},<br>
+      <div >Your expected Waiting Time is: <p id ="expected_time">{{expected_time}}</p> minutes</div>
+      <div >With <p id="patAhead">{{totalPeople}}</p> patients ahead of you</div>
   </body>
 </html>

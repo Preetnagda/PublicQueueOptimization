@@ -6,17 +6,18 @@ function fetchdata(){
   type: 'GET',
   success: function(data){
    // Perform operation on return value
-    console.log(data);
 
-    if (data['patAhead']>-1){
-      document.getElementById("expected_time").innerHTML = data['expected_time'];
-      document.getElementById("patAhead").innerHTML = data['patAhead'];
+    console.log(data)
+
+    if (data['totalPeople']>-1){
+      $("#expected_time").html(data.expected_time);
+      $('#patAhead').html(data.totalPeople);
     }
-    else if (data['patAhead']==-1) {
+    else if (data['totalPeople']==-1) {
       location.reload();
+
     }
-    else if(data['patAhead']==-2){
-      alert("hello");
+    else if(data['totalPeople']==-2){
       window.location.href = '../billing';
     }
 
