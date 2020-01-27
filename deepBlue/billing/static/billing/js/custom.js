@@ -1,4 +1,8 @@
 var timer = null;
+$( document ).ready(function() {
+  $("#showTimeAndPatients").show();
+  $("#showInWords").hide();
+});
 
 function fetchdata(){
  $.ajax({
@@ -8,18 +12,16 @@ function fetchdata(){
    // Perform operation on return value
     console.log(data);
 
-    if (data['patAhead']>-1){
+    if (data['patAhead'] != null){
+      $("#showTimeAndPatients").show();
+      $("#showInWords").hide();
       document.getElementById("expected_time").innerHTML = data['expected_time'];
       document.getElementById("patAhead").innerHTML = data['patAhead'];
     }
-    else if (data['patAhead']==-1) {
-      location.reload();
+    else if (data['patAhead'] == null) {
+      $("#showTimeAndPatients").html("");
+      $("#showInWords").show();
     }
-    else if(data['patAhead']==-2){
-      alert("hello");
-      window.location.href = '../billing';
-    }
-
   },
   complete:function(data){
    setTimeout(fetchdata,10000);

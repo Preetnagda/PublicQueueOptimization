@@ -44,15 +44,17 @@ def generateBill(request):
         return render(request,'billing.html',context=context)
 
 def patientView(request):
-    patient = request.session["current_Patient"]
-    # Check if patient is not in queue
-    patientQueueStatus = billingQueue.objects.filter(patient=patient)
-    if(patientQueueStatus.count() == 0):
-        return redirect('../')
+    if(request.session.get('current_Patient',None)):
+        patient = request.session["current_Patient"]
+        # Check if patient is not in queue
+        patientQueueStatus = billingQueue.objects.filter(patient=patient)
+        if(patientQueueStatus.count() == 0):
+            return redirect('../')
+        else:
+            queueStatus = algorithms.getPatientBillingQueueEstimatedTime(patient)
+            return render(request,'patientsView.html',context = {'queueStatus' : queueStatus})
     else:
-        queueStatus = algorithms.getPatientBillingQueueEstimatedTime(patient)
-        return render(request,'patientsView.html',context = {'queueStatus' : queueStatus})
-
+        return redirect('../')
 
 def updatetable(request):
     patient = billingQueue.objects.all()
@@ -67,4 +69,11 @@ def getPatientPos(request):
     if(request.session.get('current_Patient',None)):
         patient = request.session["current_Patient"]
         patientQueueStatus = algorithms.getPatientBillingQueueEstimatedTime(patient)
-        return JsonResponse(patientQueueStatus)
+        if patientQueueStatus == None:
+            del request.session['current_Patient']
+            request.session.modified = True
+            return JsonResponse({'patAhead':None})
+        else:
+            return JsonResponse(patientQueueStatus)
+    else:
+        return JsonResponse({'patAhead':None})

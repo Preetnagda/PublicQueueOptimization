@@ -19,5 +19,6 @@ from registration import views
 
 urlpatterns = [
     path('register',views.register),
+    path('getDoctorTime/<int:tom>',views.getDoctorTime,name='getDoctorTime'),
     path('',views.checkUserStatus),
 ]
