@@ -57,7 +57,7 @@
         <div class="form-group row">
           <label for="type_of_medication" class="col-sm-3 col-form-label">Speciality :</label>
           <div class="dropdown col-sm-8">
-            <select class="form-control" name="type_of_medication" id="type_of_medication" onchange="tomChanged()" required>
+            <select class="form-control" name="type_of_medication" id="type_of_medication"  required>
               {% for types in types_of_medication %}
               <option value="{{types.0}}">{{types.1}}</option>
               {% endfor %}
@@ -84,7 +84,7 @@
 
     <!-- Scripts -->
 
-    <script>window.onload=function(){tomchanged();startTime();disableSubmit();}</script>
+    <script>window.onload=function(){startTime();disableSubmit();}</script>
     <script src="{% static 'registration/js/index.js' %}" charset="utf-8"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <!-- End of Scripts -->
