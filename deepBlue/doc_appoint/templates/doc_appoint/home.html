@@ -35,20 +35,31 @@
     </header>
     <!-- End of Header -->
 
+  
     <div class="container pt-3"> 
       <h3>Hello {{patient_name}},{{ date }}</h3>
       <pre>You are welcomed to City Hospital!</pre>
       <hr>
       <p>Your expected waiting Time is <strong class="text-weight-bold" id ="expected_time">{{expected_time}}</strong>  minutes.</p>
-      <p >With <span id="patAhead">{{totalPeople}}</span> patients ahead for your doctor.</p>
-      
-      <!-- Footer -->
-      <footer class="footer">
-        <hr>
-        <p class="text-weight-light">You’ll Love the Way We Care for You.❤️</p>
-      </footer>
-    </div>
-    <script type="text/javascript" src="{% static 'doc_appoint/js/support.js' %}"></script>
+      <p >With <span id="patAhead">{{totalPeople}}</span> patients ahead of you for your doctor.</p>
+      <div class="row">
+      {% for i in rangee %}
+        <figure class="figure"  >
+          <img style="height:50px; width:50px;" src="{% static 'img/male.svg' %}" class="figure-img" alt="fig">
+        </figure>
+      {% endfor %}
+        <figure class="figure">
+          <img style="height:50px; width:50px;" src="{% static 'img/highlightmale.svg' %}" class="figure-img" alt="fig">
+          <figcaption class="figure-caption" style="text-align:center;">You</figcaption>
+        </figure>
+      </div>
+    <!-- Footer -->
+    <footer class="footer">
+      <hr>
+      <p class="text-weight-light">You’ll Love the Way We Care for You.❤️</p>
+    </footer>
+  </div>
+  <script type="text/javascript" src="{% static 'doc_appoint/js/support.js' %}"></script>
   
   </body>
 </html>

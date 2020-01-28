@@ -16,7 +16,7 @@ def patient_view(request):
         doc = q_details_for_curr_pat.doctor_required
         queueStatus = algorithms.getDoctor_PatientEstimatedTime(patient,doc)
         context = {"totalPeople": queueStatus["patientAhead"], "expected_time": queueStatus["estimatedTime"],"patient_name" : patient.name}
-        return render(request,'doc_appoint/home.html',{"totalPeople": queueStatus["patientAhead"], "expected_time": queueStatus["estimatedTime"],"patient_name" : patient.name})
+        return render(request,'doc_appoint/home.html',{"totalPeople": queueStatus["patientAhead"], "expected_time": queueStatus["estimatedTime"],"patient_name" : patient.name,"rangee":range(queueStatus["patientAhead"])})
     else:
         return redirect("../")
 

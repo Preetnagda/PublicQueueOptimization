@@ -37,8 +37,8 @@
     <!-- Body -->
     <div class="container p-3" >
     <h3>Billing Counter</h3>
+    {% if patient is not None %}
     <div>
-      {% if patient is not None %}
       <pre>This all patients are requested to pay their bill!</pre>
       <table id="billingTable" class="table table-bordered table-hover table-sm">
         <thead class="thead-light">
@@ -122,7 +122,6 @@
                       </div>
                     </div>
                   </div>
-                
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-dark" data-dismiss="modal">Back</button>
@@ -151,6 +150,5 @@
         $(this).find(".modal_amt").val(_billamt);
       })
     </script>
-
   </body>
 </html>
