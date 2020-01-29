@@ -57,13 +57,15 @@
         <div class="form-group row">
           <label for="type_of_medication" class="col-sm-3 col-form-label">Speciality :</label>
           <div class="dropdown col-sm-8">
-            <select class="form-control" name="type_of_medication" id="type_of_medication"  required>
+            <select class="form-control" name="type_of_medication" id="type_of_medication" onchange="callajax(this)"  required>
+              <option>Select a option</option>
               {% for types in types_of_medication %}
-              <option value="{{types.0}}">{{types.1}}</option>
+              <option value="{{types.0}}" >{{types.1}}</option>
               {% endfor %}
             </select>
           </div>
         </div>
+        <div class="row" id = "predict_time_div">your estimated time will be displayed</div>
         <div class="form-group row">
           <div class="col-sm-3"></div>
           <div class="col-sm-8">
@@ -86,6 +88,7 @@
 
     <script>window.onload=function(){startTime();disableSubmit();}</script>
     <script src="{% static 'registration/js/index.js' %}" charset="utf-8"></script>
+    <script src="{% static 'registration/js/display_waittime.js' %}" charset="utf-8"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <!-- End of Scripts -->
   </body>

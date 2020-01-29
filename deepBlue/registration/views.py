@@ -6,11 +6,20 @@ from queueAlgorithms import algorithms
 import datetime 
 # Create your views here.
 def getDoctorTime(request,tom=0):
+    print("TOM :" + str(tom))
     doc = methods.getOptimalDoctor(tom)
+    
     estimatedTime = None
     if doc is not -1:
         estimatedTime = algorithms.getDoctor_OverallEstimatedTime(doc)
-    return {'estimatedTime':estimatedTime}
+    print(estimatedTime)
+
+    if (request.method=='GET'):
+        return JsonResponse({'estimatedTime':estimatedTime})
+    
+    else:
+        return ({'estimatedTime':estimatedTime})
+
 
 def checkUserStatus(request):
     if request.session.get('current_Patient',None):
