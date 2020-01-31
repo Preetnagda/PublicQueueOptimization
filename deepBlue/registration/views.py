@@ -3,12 +3,12 @@ from django.views.decorators.http import require_POST
 from registration import models,methods
 from django.http import HttpResponse,JsonResponse
 from queueAlgorithms import algorithms
-import datetime 
+import datetime
 # Create your views here.
 def getDoctorTime(request,tom=0):
     print("TOM :" + str(tom))
     doc = methods.getOptimalDoctor(tom)
-    
+
     estimatedTime = None
     if doc is not -1:
         estimatedTime = algorithms.getDoctor_OverallEstimatedTime(doc)
@@ -16,7 +16,7 @@ def getDoctorTime(request,tom=0):
 
     if (request.method=='GET'):
         return JsonResponse({'estimatedTime':estimatedTime})
-    
+
     else:
         return ({'estimatedTime':estimatedTime})
 
@@ -48,7 +48,7 @@ def register(request):
             print(isFollowUpBoolean)
         else:
             doc = methods.getOptimalDoctor(tom)
-        if doc is not -1:
+        if doc != -1:
             estimatedTime = algorithms.getDoctor_OverallEstimatedTime(doc)
             # check duplicate patients later
             now = datetime.datetime.now()
