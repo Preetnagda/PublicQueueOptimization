@@ -1,5 +1,8 @@
-# ignore pyc 
+# ignore pyc
 *.pyc
+
 # migrations
 **/migrations/*
+
+# ignore settings
 deepBlue/deepBlue/settings.py

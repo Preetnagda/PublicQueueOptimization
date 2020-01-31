@@ -29,5 +29,6 @@ function fetchdata(){
 }
 
 $(document).ready(function(){
+  alert("started");
  timer = setTimeout(fetchdata,10000);
 })

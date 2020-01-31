@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'offline_token.apps.OfflineTokenConfig',
     'queueAlgorithms.apps.QueuealgorithmsConfig',
     'billing',
+    'home',
+    'onlineAppointment',
 ]
 
 MIDDLEWARE = [
