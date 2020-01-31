@@ -2,3 +2,4 @@
 *.pyc
 # migrations
 **/migrations/*
+deepBlue/deepBlue/settings.py
