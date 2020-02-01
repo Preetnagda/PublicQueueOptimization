@@ -18,7 +18,6 @@ from django.urls import path
 from registration import views
 
 urlpatterns = [
-    path('register',views.register),
+    path('',views.register),
     path('getDoctorTime/<int:tom>',views.getDoctorTime,name='getDoctorTime'),
-    path('',views.checkUserStatus),
 ]

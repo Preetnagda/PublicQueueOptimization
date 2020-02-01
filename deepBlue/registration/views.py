@@ -20,14 +20,11 @@ def getDoctorTime(request,tom=0):
     else:
         return ({'estimatedTime':estimatedTime})
 
-
-def checkUserStatus(request):
-    if request.session.get('current_Patient',None):
-        return redirect("../patient/")
-    else:
-        return redirect("/register")
-
 def register(request):
+
+    if(request.session.get('current_Patient',None) or request.user.is_authenticated):
+        return redirect("../")
+
     if request.method == "POST":
         # Registration process
         ptname = request.POST["patient_name"]
