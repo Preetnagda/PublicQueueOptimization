@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>Login</title>
+    </head>
+    <body>
+        <form action="login" method="POST">
+            {%csrf_token%}
+            <h3>Log in</h3>
+            <div class="form-group">
+                <div class="form-wrapper">
+                
+            <div class="form-wrapper">
+                <label for="">Username</label>
+                <input type="text" name = "username" class="form-control">
+            </div>
+            <div class="form-wrapper">
+                <label for="">Password</label>
+                <input type="password" name = "password" class="form-control">
+            </div>
+            
+            <input type = 'submit' value='log in'>
+            <div>
+                    {% for message in messages %}
+                    <h2>{{message}}</h2>
+                    {% endfor %}
+            </div>
+        </form>
+    
+    </body>
+</html>

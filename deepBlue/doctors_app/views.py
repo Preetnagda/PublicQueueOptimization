@@ -6,18 +6,20 @@ from billing.models import *
 from datetime import datetime, timezone
 from queueAlgorithms import algorithms
 def doctor_view(request):
-
-    try:
-        doc_id = 1
-        patient_list=appointmentQueue.objects.filter(doctor_required_id=doc_id,actual_time=None)
-        current_patient = patient_list[0]
-        current_patient.actual_time = current_patient.consultation_time_in - current_patient.time_in
-        current_patient.actual_time=current_patient.actual_time.seconds/60
-        current_patient.consultation_in=datetime.now(timezone.utc)
-        return render(request,'doctor_page.html',{'current_patient':current_patient})
-    except IndexError as error:
-        print(error)
-        return HttpResponse('No more patients!!!')
+    if not request.session.get('current_doctor',None):
+        return redirect('login')
+    else:
+        try:
+            doc_id = 1
+            patient_list=appointmentQueue.objects.filter(doctor_required_id=doc_id,actual_time=None)
+            current_patient = patient_list[0]
+            current_patient.actual_time = current_patient.consultation_time_in - current_patient.time_in
+            current_patient.actual_time=current_patient.actual_time.seconds/60
+            current_patient.consultation_in=datetime.now(timezone.utc)
+            return render(request,'doctor_page.html',{'current_patient':current_patient})
+        except IndexError as error:
+            print(error)
+            return HttpResponse('No more patients!!!')
 
 def patient_exit(request):
 

@@ -38,10 +38,13 @@ def generateBill(request):
         payeeInstance.delete()
         return redirect('/billing/counter')
     else:
-        patient = billingQueue.objects.all().order_by("-id")
-        date = datetime.now().strftime("%d/%m/20%y")
-        context =  {'patient':patient,'date':date}
-        return render(request,'billing.html',context=context)
+        if not request.session.get('which_user',None):
+            return redirect('login')
+        else:
+            patient = billingQueue.objects.all().order_by("-id")
+            date = datetime.now().strftime("%d/%m/20%y")
+            context =  {'patient':patient,'date':date}
+            return render(request,'billing.html',context=context)
 
 def patientView(request):
     if(request.session.get('current_Patient',None)):

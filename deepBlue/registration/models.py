@@ -1,5 +1,8 @@
 from django.db import models
 import datetime
+from django.contrib.auth.models import User
+
+
 
 # Create your models here.
 class patient(models.Model):
@@ -22,6 +25,8 @@ class doctor(models.Model):
     speciality = models.CharField(choices = CHOICES,max_length=20)
     feePerPatient = models.DecimalField(max_digits=10,decimal_places=2)
     followUpFee = models.DecimalField(max_digits=10,decimal_places=2,default=100)
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    
 
 class appointmentQueue(models.Model):
     date_time = models.DateTimeField(default=datetime.datetime.now())
