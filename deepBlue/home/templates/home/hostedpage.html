@@ -26,7 +26,10 @@
   <body>
 
     <nav class="navbar navbar-expand-md navbar-light bg-light">
-      <img src="{% static 'img/hospital.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
+      <a class="navbar-brand" href="#">
+        <img src="{% static 'img/hospital.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
+         City Hospital
+      </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -54,11 +57,11 @@
 
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron" style="background:#00BCFF">
-        <div class="container" <!--style="background-image: url({% static img_backgroud.jpg %}); height: 100%; background-position: center; background-repeat: no-repeat;  background-size: cover;">-->
+        <div class="container" <!--style="background-image: url({% static img_backgroud.jpg %}); height: 100%; background-position: center; background-repeat: no-repeat;  background-size: cover;">
           <h1 class="display-3">Here For You, Always!</h1>
           <p>City Hospital is always here to serve you and all your Health Care needs with utmost efficience.<br>
              Years of Experience has only made us Better.</p>
-          <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+        <!--  <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>-->
         </div>
       </div>
 
@@ -66,19 +69,14 @@
         <!-- Example row of columns -->
         <div class="row">
           <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+            <h2>Doctor's</h2>
+            <p>The One's in whose hands you place your Trust & Life.<br>Know a little about their schedule and days of availiablity.</p>
+            <p><a class="btn btn-secondary" href="#" role="button" style="background:#00BCFF">View details &raquo;</a></p>
           </div>
           <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+            <h2>Schedule's</h2>
+            <p>Before visiting the establishment know the respective doctor's time slots and their empty schedule.</p>
+            <p><a class="btn btn-secondary" href="#" role="button" style="background:#00BCFF";>View details &raquo;</a></p>
           </div>
         </div>
 
