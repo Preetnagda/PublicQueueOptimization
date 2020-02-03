@@ -16,7 +16,7 @@ class appointmentRecords(models.Model):
 
 
 class billingRecords(models.Model):
-    patient = models.OneToOneField(registration_models.patient,on_delete=models.CASCADE)
+    patient = models.ForeignKey(registration_models.patient,on_delete=models.CASCADE)
     billAmount = models.DecimalField(max_digits=10,decimal_places=2)
     date_time = models.DateTimeField(default=datetime.datetime.now())
     doctor = models.ForeignKey(registration_models.doctor,on_delete=models.CASCADE)
