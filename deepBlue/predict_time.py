@@ -47,7 +47,7 @@ data['month']=d.month
 print(d.date)
 #data=data[(data['month']== 12) & (data['day']==2)]
 data = data.set_index(pd.DatetimeIndex(data['consultation_in']))
-#data=data['2019-11-01':'2019-12-15']
+data=data['2019-11-01':'2019-12-15']
 
 
 resampled_data=data.resample("1D").mean() 
@@ -81,11 +81,11 @@ plt.plot(predictions,c='red')
 
 model_arima=ARIMA(X,order=(7,1,2))
 model_arima_fit=model_arima.fit()
-model_arima_fit.plot_predict(4,400)
+model_arima_fit.plot_predict(3,400)
 predictions=model_arima_fit.forecast(steps=100)[0]
-print(predictions[0])
-#plt.plot(X)
-#plt.plot(predictions,c='red')
+# print(predictions[0])
+# plt.plot(X)
+# plt.plot(predictions,c='red')
 #plt.plot(np.power(np.square(X-j),0.5))
 #print(np.power(np.square(test-predictions),0.5).mean())
 #plt.axhline(y=0,c='black')
