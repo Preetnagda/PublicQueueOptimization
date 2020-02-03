@@ -85,8 +85,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'deepBlueHospital',
-        'USER': 'yash',
-        'PASSWORD': 'yashmeet',
+        'USER': 'postgres',
+        'PASSWORD': '6204',
         'HOST':'localhost',
 
     }
