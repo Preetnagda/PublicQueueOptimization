@@ -38,10 +38,7 @@ def generateBill(request):
         payeeInstance.delete()
         return redirect('/billing/counter')
     else:
-        if not 
-        
-        
-        request.session.get('which_user',None):
+        if not request.session.get('which_user',None):
             return redirect('login')
         else:
             patient = billingQueue.objects.all().order_by("-id")

@@ -15,16 +15,16 @@ def index(request):
         patient = registration_models.patient.objects.get(id=patient)
         userStatus = methods.checkUserStatus(patient)
         if(userStatus == "registered"):
-            return redirect("patient")
+            return redirect("/patient")
         elif (userStatus == "consulted"):
-            return redirect("billing")
+            return redirect("/billing")
         elif (userStatus == "billed"):
             try:
                 del request.session["current_Patient"]
                 request.session.modified = True
             except:
                 pass
-            return redirect("register")
+            return redirect("/register")
         return HttpResponse(userStatus)
 
     elif(request.user.is_authenticated):
