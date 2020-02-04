@@ -22,6 +22,8 @@ urlpatterns = [
     path('patient/',include('doc_appoint.urls')),
     path('doctor/',include('doctors_app.urls')),
     path('generateToken/',include('offline_token.urls')),
+    path('doctor/',include('doctors_app.urls')),
+    path('online_appointment/',include('onlineAppointment.urls')),
     path('billing/',include('billing.urls')),
     path('',include('home.urls'))
 ]
