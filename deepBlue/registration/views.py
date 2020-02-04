@@ -30,6 +30,8 @@ def register(request):
         ptname = request.POST["patient_name"]
         ptno = request.POST["ptphno"]
         tom = request.POST["type_of_medication"]
+        appointmentDate = request.POST["appointmentDate"]
+        
         duplicatePatient = models.patient.objects.filter(phno = ptno)
         newPatient = None
         if(duplicatePatient.count() != 0):
@@ -50,6 +52,7 @@ def register(request):
             # check duplicate patients later
             now = datetime.datetime.now()
             queueEntry = models.appointmentQueue(
+                dateOfAppointment = appointmentDate,
                 patient = newPatient,
                 doctor_required = doc,
                 predicted_time = estimatedTime,

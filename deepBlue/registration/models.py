@@ -29,6 +29,7 @@ class doctor(models.Model):
     
 
 class appointmentQueue(models.Model):
+    dateOfAppointment = models.DateField(default=datetime.datetime.now())
     date_time = models.DateTimeField(default=datetime.datetime.now())
     time_in= models.DateTimeField()
     patient = models.ForeignKey(patient,on_delete=models.CASCADE)
