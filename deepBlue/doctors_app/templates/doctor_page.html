@@ -83,7 +83,7 @@
     <legend>Current Patient</legend>
     <a href = '/home/logout'>logout</a>
     <p style="margin-left:10px;">The Current patient Id is:</p>
-    <p>{{current_patient.patient_id}}</p><br>
+    <p>{{current_patient.patient.name}}</p><br>
 
     <button onclick="location.href='{% url 'patient_exit' %}'" style="margin-left: 10px;">Next Patient</button>
   </fieldset><br><br>

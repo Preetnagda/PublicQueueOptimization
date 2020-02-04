@@ -5,6 +5,7 @@ from registration.models import appointmentQueue
 from billing.models import *
 from datetime import datetime, timezone
 from queueAlgorithms import algorithms
+
 def doctor_view(request):
     if not request.session.get('current_doctor',None):
         return redirect('login')

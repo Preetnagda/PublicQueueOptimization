@@ -47,7 +47,7 @@ data['month']=d.month
 print(d.date)
 #data=data[(data['month']== 12) & (data['day']==2)]
 data = data.set_index(pd.DatetimeIndex(data['consultation_in']))
-data=data['2019-11-01':'2019-12-15']
+#data=data['2019-11-01':'2019-12-15']
 
 
 resampled_data=data.resample("1D").mean() 
@@ -67,7 +67,7 @@ test_stationarity(resampled_data['consultation_time'])
 #test_stationarity(log_data['consultation_time'])
 #test_stationarity(resampled_data['consultation_time'])
 X=resampled_data['consultation_time'].values
-#plt.hist(resampled_data['consultation_in'])
+plt.hist(resampled_data.index)
 plt.show()
 '''
 model_ar=AR(train)
