@@ -9,12 +9,21 @@ class patient(models.Model):
     name = models.CharField(max_length=100)
     phno = models.CharField(max_length=10)
 
+class slots(models.Model):
+    slot1 = models.BooleanField(default=False)
+    slot2 = models.BooleanField(default=False)
+    slot3 = models.BooleanField(default=False)
+    slot4 = models.BooleanField(default=False)
+    slot5 = models.BooleanField(default=False)
+    slot6 = models.BooleanField(default=False)
+    slot7 = models.BooleanField(default=False)
+    slot8 = models.BooleanField(default=False)
+
 class doctor(models.Model):
     CHOICES = (
         ("1", 'Heart'),
         ("2", 'ENT'),
         ("3", 'Physcologist'),
-        ("4", 'Muscle'),
     )
 
     timepp = models.DecimalField(max_digits=10,decimal_places=1)
@@ -26,7 +35,9 @@ class doctor(models.Model):
     feePerPatient = models.DecimalField(max_digits=10,decimal_places=2)
     followUpFee = models.DecimalField(max_digits=10,decimal_places=2,default=100)
     user = models.OneToOneField(User,on_delete=models.CASCADE)
+    # slots = models.ForeignKey(slots,on_delete=models.CASCADE)
     
+
 
 class appointmentQueue(models.Model):
     dateOfAppointment = models.DateField(default=datetime.datetime.now())
