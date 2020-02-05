@@ -20,6 +20,35 @@
   </head>
 
   <body>
+
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+      <a class="navbar-brand" href="#">
+        <img src="{% static 'img/hospital.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
+         City Hospital
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Book An Appointment</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="#">By Doctor's Name.</a>
+              <a class="dropdown-item active" href="#">By Speciality.</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
     <div class="container">
 
       <form method="post">
@@ -45,9 +74,19 @@
          <div class="col-sm-8">
             <input type="date" class="form-control" name="appointmentDate" >
          </div>
-
        </div>
 
+       <div class="form-group row">
+         <label for="appointmentDate" class="col-sm-3 col-form-label">appointmentSlot: </label>
+         <div class="dropdown col-sm-8">
+           <select class="form-control" name="time_slot" id="time_slot" onchange="callajax(this)"  required>
+             <option>Select a option</option>
+             {% for types in types_of_medication %}
+             <option value="{{types.0}}" >{{types.1}}</option>
+             {% endfor %}
+           </select>
+         </div>
+       </div>
         <div class="form-group row">
           <label for="type_of_medication" class="col-sm-3 col-form-label">Speciality :</label>
           <div class="dropdown col-sm-8">
