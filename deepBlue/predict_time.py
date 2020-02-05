@@ -15,7 +15,7 @@ register_matplotlib_converters()
 #from statsmodels.tsa.stattools import adfuller
 
 data = pd.read_csv('c.csv')
-d=data[data['is_follow_up']==True]
+d=data[data['doctor_required_id']==1]
 d=pd.DatetimeIndex(data['consultation_in'])
 data['day']=d.day
 data['day_of_the_week']=d.dayofweek
@@ -24,7 +24,8 @@ data['month']=d.month
 print(d.date)
 #data=data[(data['month']== 12) & (data['day']==2)]
 data = data.set_index(pd.DatetimeIndex(data['consultation_in']))
-data=data['2019-11-01':'2019-12-15']
+data=data['2019-11-01':'2019-12-10']
+plt.hist(data.index)
 resampled_data=data.resample("1D").mean() 
 print(resampled_data)
 
@@ -41,7 +42,9 @@ test_stationarity(resampled_data['consultation_time'])
 #log_data=(np.log(resampled_data))
 #test_stationarity(log_data['consultation_time'])
 #test_stationarity(resampled_data['consultation_time'])
+
 X=resampled_data['consultation_time'].values
+
 #plt.hist(resampled_data.index)
 #plt.show()
 '''

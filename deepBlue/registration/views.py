@@ -30,7 +30,7 @@ def register(request):
         ptname = request.POST["patient_name"]
         ptno = request.POST["ptphno"]
         tom = request.POST["type_of_medication"]
-        appointmentDate = request.POST["appointmentDate"]
+        appointmentDate = datetime.datetime.now().date()
         
         duplicatePatient = models.patient.objects.filter(phno = ptno)
         newPatient = None

@@ -11,11 +11,11 @@ def getOptimalDoctor(type_of_medication):
     docList = doctor.objects.filter(speciality=type_of_medication)
     if docList is not None:
         docInstance = docList[0]
-        min=algorithms.getDoctor_OverallEstimatedTime(docList[0])
+        docMin=algorithms.getDoctor_OverallEstimatedTime(docList[0])
         for doc in docList:
             docTime = algorithms.getDoctor_OverallEstimatedTime(doc)
-            if(min>docTime):
-                min = docTime
+            if(docMin>docTime):
+                docMin = docTime
                 docInstance = doc
         return docInstance
     else:

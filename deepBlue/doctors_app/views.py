@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from queueAlgorithms.models import *
-from registration.models import appointmentQueue
+from queueAlgorithms import models as queueAlgorithms_models
+from registration import models as registration_models
 from billing.models import *
 from datetime import datetime, timezone
 from queueAlgorithms import algorithms
@@ -11,8 +11,9 @@ def doctor_view(request):
         return redirect('login')
     else:
         try:
-            doc_id = 1
-            patient_list=appointmentQueue.objects.filter(doctor_required_id=doc_id,actual_time=None)
+            docID = request.session["current_doctor"]
+            doc = registration_models.doctor.objects.filter(id=docID)[0]
+            patient_list=registration_models.appointmentQueue.objects.filter(doctor_required=doc,actual_time=None,dateOfAppointment=datetime.now().date())
             current_patient = patient_list[0]
             current_patient.actual_time = current_patient.consultation_time_in - current_patient.time_in
             current_patient.actual_time=current_patient.actual_time.seconds/60
@@ -24,14 +25,21 @@ def doctor_view(request):
 
 def patient_exit(request):
 
-    doc_id = 1
-    patient_list=appointmentQueue.objects.filter(doctor_required_id=doc_id)
+    docID= request.session["current_doctor"]
+    doc = registration_models.doctor.objects.filter(id=docID)[0]
+    patient_list=registration_models.appointmentQueue.objects.filter(doctor_required=doc,dateOfAppointment=datetime.now().date())
     current_patient = patient_list[0]
-    new_record = appointmentRecords()
-    new_record = current_patient
-    new_record.consultation_out=datetime.now(timezone.utc)
-    new_record.consultation_time = new_record.consultation_out - new_record.consultation_time_in
-    new_record.save()
+    new_record = queueAlgorithms_models.appointmentRecords.objects.get_or_create(
+        patient = current_patient.patient,
+        doctor_required = doc,
+        predicted_time = current_patient.predicted_time,
+        actual_time = current_patient.actual_time,
+        time_in=current_patient.time_in,
+        consultation_in=current_patient.consultation_time_in,
+        consultation_out= datetime.now(),
+        consultation_time = ((datetime.now(tz=timezone.utc) - current_patient.consultation_time_in).seconds)/60,
+        is_follow_up = current_patient.is_follow_up,
+    )
     new_billing_record = billingQueue()
     if current_patient.is_follow_up is False :
         new_billing_record.billAmount = current_patient.doctor_required.feePerPatient
