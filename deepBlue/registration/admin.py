@@ -5,3 +5,5 @@ from registration import models
 admin.site.register(models.doctor)
 admin.site.register(models.patient)
 admin.site.register(models.appointmentQueue)
+
+admin.site.register(models.slots)
