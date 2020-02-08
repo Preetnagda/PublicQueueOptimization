@@ -10,18 +10,17 @@ def doctor_view(request):
     if not request.session.get('current_doctor',None):
         return redirect('login')
     else:
-        try:
-            docID = request.session["current_doctor"]
-            doc = registration_models.doctor.objects.filter(id=docID)[0]
-            patient_list=registration_models.appointmentQueue.objects.filter(doctor_required=doc,actual_time=None,dateOfAppointment=datetime.now().date())
+        docID = request.session["current_doctor"]
+        doc = registration_models.doctor.objects.filter(id=docID)[0]
+        patient_list=registration_models.appointmentQueue.objects.filter(doctor_required=doc,actual_time=None,dateOfAppointment=datetime.now().date())
+        check = patient_list.exists()
+        current_patient = None
+        if check: 
             current_patient = patient_list[0]
             current_patient.actual_time = current_patient.consultation_time_in - current_patient.time_in
             current_patient.actual_time=current_patient.actual_time.seconds/60
             current_patient.consultation_in=datetime.now(timezone.utc)
-            return render(request,'doctor_page.html',{'current_patient':current_patient,'patient':patient_list})
-        except IndexError as error:
-            print(error)
-            return HttpResponse('No more patients!!!')
+        return render(request,'doctor_page.html',{'current_patient':current_patient,'patient':patient_list,'count':check})
 
 def patient_exit(request):
 

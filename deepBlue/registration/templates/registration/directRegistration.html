@@ -8,20 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- bootstrap imports -->
-    <link rel="stylesheet" type="text/css" href="{% static 'registration/css/bootstrap.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"/>
 
     <!-- static imports -->
-    <link rel="stylesheet" href="{% static 'registration/css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
     <!--JQuery script imports -->
-    <script type="text/javascript" src={% static 'registration/js/jquery-3.1.1.js' %}></script>
+    <script type="text/javascript" src={% static 'js/jquery-3.1.1.js' %}></script>
   </head>
 
   <body>
 
   <!-- Header -->
     <header class="navbar navbar-expand navbar-light bg-light">
-      <a class="navbar-brand" href="#">
-        <img src="{% static 'img/hospital.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
+      <a class="navbar-brand" href="#"><img src="{% static 'img/hospital.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
         City Hospital
       </a>
       <span class="navbar-text ml-auto">{{ date }} <span id="clockk"></span></span>
@@ -57,7 +56,7 @@
               <option>Select a option</option>
               {% for types in types_of_medication %}
               <option value="{{types.0}}" >{{types.1}}</option>
-              {% endfor %}
+                {% endfor %}
             </select>
           </div>
         </div>
@@ -89,10 +88,10 @@
     <script src="{% static 'js/index.js' %}" charset="utf-8"></script>
     <script src="{% static 'registration/js/display_waittime.js' %}" charset="utf-8"></script>
     <!-- JQuery,Pooper and Bootstrap imports -->
-    <script type="text/javascript" src={% static 'registration/js/jquery-3.1.1.js' %}></script>
-    <script type="text/javascript" src="{% static 'registration/js/tether.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'registration/js/bootstrap.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'registration/js/popper.min.js' %}"></script>
+    <script type="text/javascript" src={% static 'js/jquery-3.1.1.js' %}></script>
+    <script type="text/javascript" src="{% static 'js/tether.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
   <!-- End of Scripts -->
   </body>
 </html>

@@ -36,3 +36,4 @@ function activateButton(element) {
 function tomChanged(){
     var tom = document.getElementById('type_of_medication').value;
 }
+
