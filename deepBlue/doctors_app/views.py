@@ -18,7 +18,7 @@ def doctor_view(request):
             current_patient.actual_time = current_patient.consultation_time_in - current_patient.time_in
             current_patient.actual_time=current_patient.actual_time.seconds/60
             current_patient.consultation_in=datetime.now(timezone.utc)
-            return render(request,'doctor_page.html',{'current_patient':current_patient})
+            return render(request,'doctor_page.html',{'current_patient':current_patient,'patient':patient_list})
         except IndexError as error:
             print(error)
             return HttpResponse('No more patients!!!')

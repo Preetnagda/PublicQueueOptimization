@@ -1,33 +1,56 @@
-{ % load static % }
+{% load static %}
 <!DOCTYPE html>
 
 <html>
   <head>
-    {% load static %}
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <title>Doctors Admin</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- script imports -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    <!-- bootstrap imports -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <!-- static imports -->
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
-
-    <title>Doctors Admin</title>
-
   </head>
   <body>
-    <fieldset style="padding: 5px; margin: 10px;">
-    <legend>Current Patient</legend>
-    <a href = '/logout'>logout</a>
-    <p style="margin-left:10px;">The Current patient Id is:</p>
-    <p>{{current_patient.patient.name}}</p><br>
+  <!-- Header -->
+    <header class="navbar navbar-expand navbar-light bg-light">
+      <a class="navbar-brand" href="#">
+        <img src="{% static 'img/hospital.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
+        City Hospital
+      </a>
+      <span class="navbar-text ml-auto">{{ date }} <span id="clockk"></span></span>
+    </header>
+  <!-- End of Header -->
 
-    <button onclick="location.href='{% url 'patient_exit' %}'" style="margin-left: 10px;">Next Patient</button>
-  </fieldset><br><br>
+  <!-- Container -->
+    <div class="container p-3">
+      <h3 class="mt-3">Welcome Doctor,</h3>
+      <pre>Hope you raised your dopamine levels for today!</pre>
+      <hr>
+      <h5>Your current patient is {{current_patient.patient.name}}.</h5>
 
-  <div class="container p-3" >
+      <div class="row p-2">
+        <button type="button" class="btn btn-info col-sm-4 m-1" onclick="location.href='{% url 'patient_exit' %}'">Next Patient</button>
+        <div class="col-sm-2"></div>
+        <button type="button" class="btn btn-danger col-sm-4 m-1" onclick="location.href='/logout'">Exit</button>
+      </div>
+      <hr>
+
+      <div>
+        {% for patients in patient %}
+        <p>{{ patients.patient.name }}</p>
+        {% endfor %}
+      </div>
   <div>
+
+  <!--
     {% if patient is not None %}
     <pre>This patients are waiting in the Queue</pre>
     <table class="table table-bordered table-hover table-sm">
@@ -55,5 +78,15 @@
 
   {% endif %}
 
+    </div>
+-->
+  
+  <!-- Scripts -->
+    <script>window.onload=function(){startTime();disableSubmit();}</script>
+    <script src="{% static 'registration/js/index.js' %}" charset="utf-8"></script>
+    <script src="{% static 'registration/js/display_waittime.js' %}" charset="utf-8"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.js"></script>
+    <!-- End of Scripts -->
   </body>
 </html>

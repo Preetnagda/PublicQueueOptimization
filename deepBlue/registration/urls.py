@@ -20,4 +20,5 @@ from registration import views
 urlpatterns = [
     path('',views.register),
     path('getDoctorTime/<int:tom>',views.getDoctorTime,name='getDoctorTime'),
+    path('registerOnlineAppointment/<int:patientID>',views.registerOnlineAppointment,name="registerOnlineAppointment")
 ]
