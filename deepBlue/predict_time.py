@@ -10,12 +10,13 @@ from statsmodels.graphics.tsaplots import plot_acf
 from statsmodels.tsa.ar_model import AR
 from statsmodels.tsa.arima_model import ARIMA
 from sklearn.metrics import mean_squared_error
+import seaborn as sns
 register_matplotlib_converters()
 #from sklearn.cross_validation import train_test_split
 #from statsmodels.tsa.stattools import adfuller
 
 data = pd.read_csv('c.csv')
-d=data[data['doctor_required_id']==1]
+data=data[data['doctor_required_id']==1 ]
 d=pd.DatetimeIndex(data['consultation_in'])
 data['day']=d.day
 data['day_of_the_week']=d.dayofweek
@@ -24,12 +25,15 @@ data['month']=d.month
 print(d.date)
 #data=data[(data['month']== 12) & (data['day']==2)]
 data = data.set_index(pd.DatetimeIndex(data['consultation_in']))
-data=data['2019-11-01':'2019-12-10']
-plt.hist(data.index)
-resampled_data=data.resample("1D").mean() 
-print(resampled_data)
 
+
+
+
+
+#plt.hist(data.index)
+resampled_data=data.resample("1D").mean() 
 resampled_data.fillna(resampled_data.interpolate(),inplace=True)
+X=resampled_data['consultation_time'].values
 
 #plt.plot(resampled_data)
 #plot_acf(resampled_data['consultation_time'])
@@ -61,8 +65,9 @@ model_arima=ARIMA(X,order=(7,1,2))
 model_arima_fit=model_arima.fit()
 print(X.size)
 
-model_arima_fit.plot_predict(1,160)
-predictions=model_arima_fit.forecast(steps=100)[1]
+model_arima_fit.plot_predict(1,350,dynamic=True)
+predictions=model_arima_fit.forecast(100)
+print(model_arima_fit.summary())
 # print(predictions[0])
 # plt.plot(X)
 # plt.plot(predictions,c='red')
