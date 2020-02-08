@@ -10,11 +10,12 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"/>
     <!-- custom static imports -->
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src={% static 'js/jquery-3.1.1.js' %}></script>
  
   </head>
 
   <body>
+
   <!--    Header    -->
     <header class="navbar navbar-expand sticky-top navbar-light bg-light">
       <a class="navbar-brand" href="#">
@@ -59,7 +60,6 @@
       <h1>No patients for Billing</h1>
       {% endif %}
     </div>
-
   <!--    End of container    -->
 
   <!--    Modal   -->
@@ -140,8 +140,9 @@
     <script type="text/javascript" src="{% static 'js/tether.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
-<script src="{% static 'billing/js/clock.js' %}"></script>
-    <script src="{% static 'billing/js/ajax_req.js' %}"></script>
+    <!-- Custom static imports -->
+    <script type="text/javascript" src="{% static 'billing/js/clock.js' %}"></script>
+    <script type="text/javascript" src="{% static 'billing/js/ajax_req.js' %}"></script>
     <script>
       $('#myModal').on('show.bs.modal', function (e) {
         // do something...
