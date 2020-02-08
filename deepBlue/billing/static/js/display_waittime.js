@@ -9,12 +9,10 @@ function callajax(select){
             url: 'getDoctorTime/'+selected_option,
             datatype: 'JSON',  
         })
-
         .done(function(response) {
+            
             $('#predict_time_div').show();
-            $('#predict_time_div').html("Your estimated time for medication is " + 
-            response.estimatedTime + " minutes.<br/><br/>");
-
+            $('#predict_time_div').append(response.estimatedTime);
             console.log(response)
             console.log(response.estimatedTime);
             

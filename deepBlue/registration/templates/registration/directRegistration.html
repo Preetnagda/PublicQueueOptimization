@@ -8,12 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- bootstrap imports -->
-    <link rel="stylesheet" type="text/css" href="{% static 'registration/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'registration/css/bootstrap.css' %}"/>
 
     <!-- static imports -->
     <link rel="stylesheet" href="{% static 'registration/css/index.css' %}">
     <!--JQuery script imports -->
-    <script type="text/javascript" src={% static 'regisration/js/jquery-3.1.1.js' %}></script>
+    <script type="text/javascript" src={% static 'registration/js/jquery-3.1.1.js' %}></script>
   </head>
 
   <body>
@@ -61,7 +61,11 @@
             </select>
           </div>
         </div>
-        <div class="row" id ="predict_time_div">Estimated time for this medication on <p id="date"> 04-02-2020 </p> will be </div>
+        <div class="row text-primary">
+          <div class="col-sm-3"></div>
+          <div id ="predict_time_div" class="col-sm-8"> </div>
+        </div>
+        
         <div class="form-group row">
           <div class="col-sm-3"></div>
           <div class="col-sm-8">
@@ -82,13 +86,13 @@
 
   <!-- Scripts -->
     <script>window.onload=function(){startTime();disableSubmit();}</script>
-    <script src="{% static 'registration/js/index.js' %}" charset="utf-8"></script>
+    <script src="{% static 'js/index.js' %}" charset="utf-8"></script>
     <script src="{% static 'registration/js/display_waittime.js' %}" charset="utf-8"></script>
     <!-- JQuery,Pooper and Bootstrap imports -->
-    <script type="text/javascript" src={% static 'regisration/js/jquery-3.1.1.js' %}></script>
-    <script type="text/javascript" src="{% static 'regisration/js/tether.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'regisration/js/bootstrap.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'regisration/js/popper.min.js' %}"></script>
+    <script type="text/javascript" src={% static 'registration/js/jquery-3.1.1.js' %}></script>
+    <script type="text/javascript" src="{% static 'registration/js/tether.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'registration/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'registration/js/popper.min.js' %}"></script>
   <!-- End of Scripts -->
   </body>
 </html>
