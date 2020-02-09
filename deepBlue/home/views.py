@@ -8,6 +8,9 @@ from home import methods
 def home(request):
     return render(request,"home/hostedPage.html")
 
+def online_appointment(request):
+    return render(request,"online_appointment.html")
+
 
 def index(request):
     if (request.session.get('current_Patient',None)):

@@ -38,15 +38,8 @@
           <li class="nav-item active">
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Book An Appointment</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" href="#">By Doctor's Name.</a>
-              <a class="dropdown-item" href="#">By Speciality.</a>
-            </div>
+          <li class="nav-item active">
+            <a class="nav-link" type="button" onclick="location.href='{% url 'online_appointment' %}'">Book Appointment! <span class="sr-only">(current)</span></a>
           </li>
         </ul>
       </div>
@@ -72,9 +65,9 @@
             <p><a class="btn btn-secondary" href="../register" role="button" style="background:#00BCFF">View details &raquo;</a></p>
           </div>
           <div class="col-md-4">
-            <h2>Schedule's</h2>
-            <p>Before visiting the establishment know the respective doctor's time slots and their empty schedule.</p>
-            <p><a class="btn btn-secondary" href="#" role="button" style="background:#00BCFF";>View details &raquo;</a></p>
+            <h2>Appointment</h2>
+            <p>Before visiting the establishment know the respective doctor's time slots and book your appontment.</p>
+            <p><a class="btn btn-secondary" href="../online_appointment" role="button" style="background:#00BCFF";>Book Now! &raquo;</a></p>
           </div>
         </div>
 
