@@ -8,17 +8,13 @@ from datetime import timezone,timedelta
 from onlineAppointment import models as onlineAppointment_models
 # Create your views here.
 def getDoctorTime(request,tom=0):
-    print("TOM :" + str(tom))
-    doc = methods.getOptimalDoctor(tom)
-
+    doc = algorithms.getOptimalDoctor(tom)
+    journeyTime = algorithms.calculate_journey_time(tom)
     estimatedTime = None
     if doc != -1:
         estimatedTime = algorithms.getDoctor_OverallEstimatedTime(doc)
-    print(estimatedTime)
-
     if (request.method=='GET'):
-        return JsonResponse({'estimatedTime':estimatedTime})
-
+        return JsonResponse({'estimatedTime':estimatedTime,'journeyTime': journeyTime})
     else:
         return ({'estimatedTime':estimatedTime})
 
@@ -33,7 +29,7 @@ def register(request):
         ptno = request.POST["ptphno"]
         tom = request.POST["type_of_medication"]
         appointmentDate = datetime.datetime.now().date()
-        
+
         duplicatePatient = models.patient.objects.filter(phno = ptno)
         newPatient = None
         if(duplicatePatient.count() != 0):
@@ -47,7 +43,7 @@ def register(request):
             doc = models.doctor.objects.filter(id=ifFollowUp)[0]
             isFollowUpBoolean = True
         else:
-            doc = methods.getOptimalDoctor(tom)
+            doc = algorithms.getOptimalDoctor(tom)
         if doc != -1:
             estimatedTime = algorithms.getDoctor_OverallEstimatedTime(doc)
             # check duplicate patients later
@@ -87,7 +83,7 @@ def registerOnlineAppointment(request,patientID = None):
             doc = models.doctor.objects.filter(id=ifFollowUp)[0]
             isFollowUpBoolean = True
         else:
-            doc = methods.getOptimalDoctor(checkAppointment.tom)
+            doc = algorithms.getOptimalDoctor(checkAppointment.tom)
         doctorQueue = models.appointmentQueue.objects.filter(doctor_required = doc)
         minTimeIn = doctorQueue[0].time_in
         for patient in doctorQueue:

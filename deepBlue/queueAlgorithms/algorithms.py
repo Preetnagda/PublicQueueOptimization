@@ -2,7 +2,25 @@ from registration import models as registration_models
 from billing.models import billingQueue
 import datetime
 from django.utils import timezone
-import pandas as pd
+# import pandas as pd
+def getOptimalDoctor(type_of_medication):
+    CHOICES = doctor.CHOICES
+    for choice in CHOICES:
+        if(choice[1]==type_of_medication):
+            type_of_medication = choice[0]
+    docList = doctor.objects.filter(speciality=type_of_medication)
+    if docList is not None:
+        docInstance = docList[0]
+        docMin= getDoctor_OverallEstimatedTime(docList[0])
+        for doc in docList:
+            docTime = getDoctor_OverallEstimatedTime(doc)
+            if(docMin>docTime):
+                docMin = docTime
+                docInstance = doc
+        return docInstance
+    else:
+        return (-1)
+
 
 def getDoctor_PatientEstimatedTime(patient,doctor):
     timepp = doctor.timepp
@@ -11,7 +29,6 @@ def getDoctor_PatientEstimatedTime(patient,doctor):
     currentPatientInTime = None
     for pats in q_details:
         if(pats.patient == patient):
-            print("Current Patient " + pats.patient.name)
             currentPatientInTime = pats.time_in
             break
     time_now=timezone.now()
@@ -46,7 +63,6 @@ def getGeneralBillingQueueEstimatedTime():
 
 def getPatientBillingQueueEstimatedTime(patient):
     totalPatientsInQueue = billingQueue.objects.all()
-    print(totalPatientsInQueue)
     try:
         patientTimeInQueue = billingQueue.objects.filter(patient=patient)[0].date_time
         patientsAhead = 0
@@ -64,12 +80,18 @@ def getPatientBillingQueueEstimatedTime(patient):
     except:
         return (None)
 
-def calculate_journey_time(patient):
+def calculate_journey_time(tom):
 
-    patient_ahead =  registration_models.appointmentQueue.all()
-    
-
-
-
-
-
+    docInstance = getOptimalDoctor(tom)
+    currentDoctorTime = getDoctor_OverallEstimatedTime(docInstance)
+    timeForConsultation = docInstance.timepp + currentDoctorTime
+    consultaionTimeOut = now + timedelta(seconds=float(timeForConsultation)*60)
+    queueInstance = registration_models.appointmentQueue.objects.all().order_by('expected_consultation_out')
+    currentBillingTime = getGeneralBillingQueueEstimatedTime()['expected_time']
+    predictedBillingQueue = []
+    overallTimeOfPatientsAheadOfMe = 0
+    for patient in queueInstance:
+        if(patient.expected_consultation_out < consultaionTimeOut):
+            overallTimeOfPatientsAheadOfMe = overallTimeOfPatientsAheadOfMe + getPatientBillingQueueEstimatedTime(patient.patient)['expected_time']
+            predictedBillingQueue.append(patient)
+    return (overallTimeOfPatientsAheadOfMe + 10 + docInstance.timepp)
