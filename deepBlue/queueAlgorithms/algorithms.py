@@ -2,6 +2,7 @@ from registration import models as registration_models
 from billing.models import billingQueue
 import datetime
 from django.utils import timezone
+import pandas as pd
 
 def getDoctor_PatientEstimatedTime(patient,doctor):
     timepp = doctor.timepp
@@ -62,3 +63,13 @@ def getPatientBillingQueueEstimatedTime(patient):
         return (data)
     except:
         return (None)
+
+def calculate_journey_time(patient):
+
+    patient_ahead =  registration_models.appointmentQueue.all()
+    
+
+
+
+
+
