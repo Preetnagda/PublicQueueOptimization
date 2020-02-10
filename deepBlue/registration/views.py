@@ -4,7 +4,7 @@ from registration import models,methods
 from django.http import HttpResponse,JsonResponse
 from queueAlgorithms import algorithms
 import datetime
-from datetime import timezone
+from datetime import timezone,timedelta
 from onlineAppointment import models as onlineAppointment_models
 # Create your views here.
 def getDoctorTime(request,tom=0):
@@ -33,7 +33,7 @@ def register(request):
         ptno = request.POST["ptphno"]
         tom = request.POST["type_of_medication"]
         appointmentDate = datetime.datetime.now().date()
-
+        
         duplicatePatient = models.patient.objects.filter(phno = ptno)
         newPatient = None
         if(duplicatePatient.count() != 0):
@@ -58,7 +58,9 @@ def register(request):
                 doctor_required = doc,
                 predicted_time = estimatedTime,
                 time_in = now,
-                is_follow_up = isFollowUpBoolean
+                is_follow_up = isFollowUpBoolean,
+                expected_consultation_out = now + timedelta(seconds=float(estimatedTime)*60)+timedelta(seconds=float(doc.timepp*60))
+
             )
             queueEntry.save()
             request.session['current_Patient'] = newPatient.id
