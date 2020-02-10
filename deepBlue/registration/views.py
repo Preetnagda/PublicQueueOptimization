@@ -85,26 +85,33 @@ def registerOnlineAppointment(request,patientID = None):
             doc = models.doctor.objects.filter(id=ifFollowUp)[0]
             isFollowUpBoolean = True
         else:
-            doc = methods.getOptimalDoctor(tom)
+            doc = methods.getOptimalDoctor(checkAppointment.tom)
+        doctorQueue = models.appointmentQueue.objects.filter(doctor_required = doc)
+        minTimeIn = doctorQueue[0].time_in
+        for patient in doctorQueue:
+            if(patient.time_in < minTimeIn):
+                minTimeIn = patient.time_in
+        newTimeIn = minTimeIn + datetime.timedelta(0,3)
         if(timediff < 0):
-            if doc != -1:
-                estimatedTime = 0
-                now = datetime.datetime.now()
-                queueEntry = models.appointmentQueue(
-                    patient = checkAppointment.patient,
-                    doctor_required = doc,
-                    predicted_time = estimatedTime,
-                    time_in = checkAppointment.time,
-                    is_follow_up = isFollowUpBoolean
-                )
-        elif(timediff < 45):
+            estimatedTime = 0
+            now = datetime.datetime.now()
             queueEntry = models.appointmentQueue(
                 patient = checkAppointment.patient,
                 doctor_required = doc,
                 predicted_time = estimatedTime,
-                time_in = checkAppointment.time,
+                time_in = newTimeIn,
                 is_follow_up = isFollowUpBoolean
             )
-        queueEntry.save()
-        request.session['current_Patient'] = newPatient.id
-        return redirect("../patient/")
+            queueEntry.save()
+        elif(timediff < 120):
+            estimatedTime = 0
+            queueEntry = models.appointmentQueue(
+                patient = checkAppointment.patient,
+                doctor_required = doc,
+                predicted_time = estimatedTime,
+                time_in = newTimeIn,
+                is_follow_up = isFollowUpBoolean
+            )
+            queueEntry.save()
+        request.session['current_Patient'] = checkAppointment.patient.id
+        return redirect("../../patient/")
