@@ -1,14 +1,16 @@
+from queueAlgorithms import models
 from registration import models as registration_models
 from billing.models import billingQueue
 import datetime
+from datetime import timedelta,timezone
 from django.utils import timezone
 # import pandas as pd
 def getOptimalDoctor(type_of_medication):
-    CHOICES = doctor.CHOICES
+    CHOICES = registration_models.doctor.CHOICES
     for choice in CHOICES:
         if(choice[1]==type_of_medication):
             type_of_medication = choice[0]
-    docList = doctor.objects.filter(speciality=type_of_medication)
+    docList = registration_models.doctor.objects.filter(speciality=type_of_medication)
     if docList is not None:
         docInstance = docList[0]
         docMin= getDoctor_OverallEstimatedTime(docList[0])
@@ -80,8 +82,28 @@ def getPatientBillingQueueEstimatedTime(patient):
     except:
         return (None)
 
+def getPatientBillingEstimatedTime(patient):
+    billingTime = 0
+    try:
+        patientHistory = models.billingRecords.objects.filter(patient=patient)
+        cash = 0
+        card = 0
+        for patient in patientHistory:
+            if(patient.is_Cash):
+                cash = cash + 1
+            else:
+                card = card + 1
+        if(cash>card):
+            billingTime = 5
+        else:
+            billingTime = 10
+        return(billingTime)
+    except:
+        return (10)
+
 def calculate_journey_time(tom):
 
+    now = datetime.datetime.now(timezone.utc)
     docInstance = getOptimalDoctor(tom)
     currentDoctorTime = getDoctor_OverallEstimatedTime(docInstance)
     timeForConsultation = docInstance.timepp + currentDoctorTime
@@ -92,6 +114,9 @@ def calculate_journey_time(tom):
     overallTimeOfPatientsAheadOfMe = 0
     for patient in queueInstance:
         if(patient.expected_consultation_out < consultaionTimeOut):
-            overallTimeOfPatientsAheadOfMe = overallTimeOfPatientsAheadOfMe + getPatientBillingQueueEstimatedTime(patient.patient)['expected_time']
+            overallTimeOfPatientsAheadOfMe = overallTimeOfPatientsAheadOfMe + getPatientBillingEstimatedTime(patient.patient)
             predictedBillingQueue.append(patient)
+    # timeppOfPatient = predictedBillingQueue[0].doctor_required.timepp
+    # print("overallTimeOfPatientsAheadOfMe " + str(overallTimeOfPatientsAheadOfMe))
+    # print("timepp" + str(docInstance.timepp))
     return (overallTimeOfPatientsAheadOfMe + 10 + docInstance.timepp)
