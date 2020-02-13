@@ -1,10 +1,11 @@
 var timer = null;
-
+var tempPeople = -1;
 function fetchdata(){
  $.ajax({
   url: 'getPatientPos',
   type: 'GET',
   success: function(data){
+
    // Perform operation on return value
    $("#visualQueueDiv").html("");
     for(var i = 0;i<parseInt(data['totalPeople']);i++){
@@ -24,6 +25,12 @@ function fetchdata(){
        `
     );
     // console.log(data)
+    // alert((tempPeople == -1 || tempPeople!=data['totalPeople']) && data['totalPeople']<=1);
+    if((tempPeople == -1 || tempPeople!=data['totalPeople']) && data['totalPeople']<=1){
+      let audio = new Audio(notificationSound);
+      audio.play();
+      tempPeople = data['totalPeople'];
+    }
 
     if (data['totalPeople']>-1){
       $("#expected_time").html(data.expected_time);

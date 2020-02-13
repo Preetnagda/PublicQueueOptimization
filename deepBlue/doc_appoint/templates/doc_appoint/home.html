@@ -39,7 +39,7 @@
       <hr>
       <p id="waitTimeParagraph">Your expected waiting Time is <strong class="text-weight-bold" id ="expected_time">{{expected_time}}</strong>  minutes.</p>
       <p >With <span id="patAhead">{{totalPeople}}</span> patients ahead of you for your doctor.</p>
-      <div class="row" id="visualQueueDiv">      
+      <div class="row" id="visualQueueDiv">
         {% for i in rangee %}
           <figure class="figure">
             <img style="height:50px; width:50px;" src="{% static 'img/male.svg' %}" class="figure-img" alt="fig">
@@ -50,6 +50,9 @@
           <figcaption class="figure-caption" style="text-align:center;">You</figcaption>
         </figure>
       </div>
+      <div id="notificationSound">
+
+      </div>
     <!-- Footer -->
     <footer class="footer">
       <hr>
@@ -57,6 +60,7 @@
     </footer>
   </div>
     <script type="text/javascript">
+      var notificationSound = "{% static 'doc_appoint/audio/beep.mp3' %}"
       var maleImageSrc = "{% static 'img/male.svg' %}"
       var highlightMaleSrc = "{% static 'img/highlightmale.svg' %}"
     </script>
