@@ -11,6 +11,9 @@ def getDoctorTime(request,tom=0):
     doc = algorithms.getOptimalDoctor(tom)
     journeyTime = algorithms.calculate_journey_time(tom)
     estimatedTime = None
+    now = datetime.datetime.now()
+    journeyTime = now + timedelta(seconds=float(journeyTime)*60)
+    journeyTime = str(journeyTime.time())[0:5]
     if doc != -1:
         estimatedTime = algorithms.getDoctor_OverallEstimatedTime(doc)
     if (request.method=='GET'):
