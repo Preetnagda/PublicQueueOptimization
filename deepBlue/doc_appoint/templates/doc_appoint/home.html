@@ -70,8 +70,29 @@
     <script type="text/javascript" src="{% static 'js/tether.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+    <script>
+      function startTimer(time) {
+        var timer = time, minutes, seconds;
+          setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            context.innerHTML = minutes + ":" + seconds;
+            if (--timer < 0) {
+                timer = time;
+            }
+        }, 1000);
+      }
 
 
+      window.onload = function () {
+        var min = document.getElementByID('expected_time'),
+            context = document.getElementByID('#time');
+          startTimer(min, context);
+      };
 
   </body>
 </html>
