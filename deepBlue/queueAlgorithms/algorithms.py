@@ -26,8 +26,11 @@ def getOptimalDoctor(type_of_medication):
 
 def getDoctor_PatientEstimatedTime(patient,doctor):
     timepp = doctor.timepp
+
+    timefpp = doctor.timefpp
     q_details = registration_models.appointmentQueue.objects.filter(doctor_required=doctor,actual_time=None)
     patientAhead = 0
+    followUpPatientAhead = 0
     currentPatientInTime = None
     for pats in q_details:
         if(pats.patient == patient):
@@ -36,10 +39,13 @@ def getDoctor_PatientEstimatedTime(patient,doctor):
     time_now=timezone.now()
     for pats in q_details:
         if(currentPatientInTime > pats.time_in and pats.patient!=patient):
-            patientAhead=patientAhead+1
+            if(pats.is_follow_up == True):
+                followUpPatientAhead = followUpPatientAhead + 1
+            else:
+                patientAhead=patientAhead+1
 
-    estimatedTime = timepp*(patientAhead)
-    return {"patientAhead":(patientAhead),"estimatedTime":estimatedTime}
+    estimatedTime = timepp*(patientAhead) + timefpp*(followUpPatientAhead)
+    return {"patientAhead":(patientAhead+followUpPatientAhead),"estimatedTime":estimatedTime}
 
 def getDoctor_OverallEstimatedTime(doctor):
     timepp=doctor.timepp
