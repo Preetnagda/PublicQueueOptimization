@@ -71,7 +71,7 @@
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
     <script>
-      function startTimer(time) {
+      function startTimer(time,context) {
         var timer = time*60, minutes, seconds;
           setInterval(function () {
             minutes = parseInt(timer / 60, 10);
@@ -90,9 +90,10 @@
 
 
       window.onload = function () {
-        var min = {{ expected_time }};
-          startTimer(min);
+        var min = {{ expected_time }},
+            context = document.getElementByID('#time');
+          startTimer(min, context);
       };
-    </script>
+</script>
   </body>
 </html>

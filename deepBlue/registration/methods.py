@@ -23,3 +23,5 @@ def checkIfFollowUp(patientPhoneNumber):
             return doc_id
         else:
             return None
+    else:
+        return None
