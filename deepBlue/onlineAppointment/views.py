@@ -7,7 +7,7 @@ from django.views.decorators.http import require_http_methods
 from datetime import datetime,time,timedelta
 from django.http import HttpResponse,JsonResponse
 from django.templatetags.static import static
-
+from queueAlgorithms import algorithms
 
 # Create your views here.
 
@@ -64,7 +64,7 @@ def qrCode(request):
 def getAvailableSlots(request,appointmentDate=None,tom=None):
     now = datetime.now()
     todaysDay = now.weekday()
-    optimalDayFromToday = expected_number_of_patients(tom)
+    optimalDayFromToday = algorithms.expected_number_of_patients(tom)
     optimalDayOffset = (todaysDay + optimalDayFromToday + 1)%7
     optimalDay = now + timedelta(days=optimalDayOffset)
     optimalDay = optimalDay.date()
