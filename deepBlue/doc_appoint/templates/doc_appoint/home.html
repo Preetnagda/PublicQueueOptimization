@@ -72,7 +72,7 @@
     <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
     <script>
       function startTimer(time) {
-        var timer = time, minutes, seconds;
+        var timer = time*60, minutes, seconds;
           setInterval(function () {
             minutes = parseInt(timer / 60, 10);
             seconds = parseInt(timer % 60, 10);
@@ -80,7 +80,8 @@
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
 
-            context.innerHTML = minutes + ":" + seconds;
+            document.getElementById('expected_time').innerHTML = minutes + ":" + seconds;
+            console.log(minutes + ":" + seconds);
             if (--timer < 0) {
                 timer = time;
             }
@@ -89,10 +90,9 @@
 
 
       window.onload = function () {
-        var min = document.getElementByID('expected_time'),
-            context = document.getElementByID('#time');
-          startTimer(min, context);
+        var min = {{ expected_time }};
+          startTimer(min);
       };
-
+    </script>
   </body>
 </html>

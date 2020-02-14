@@ -16,7 +16,7 @@ register_matplotlib_converters()
 #from statsmodels.tsa.stattools import adfuller
 
 data = pd.read_csv('c.csv')
-data=data[data['doctor_required_id']==1 ]
+#data=data[data['doctor_required_id']== 2 ]
 d=pd.DatetimeIndex(data['consultation_in'])
 data['day']=d.day
 data['day_of_the_week']=d.dayofweek
@@ -65,7 +65,7 @@ model_arima=ARIMA(X,order=(7,1,2))
 model_arima_fit=model_arima.fit()
 print(X.size)
 
-model_arima_fit.plot_predict(1,350,dynamic=True)
+model_arima_fit.plot_predict(1,350)
 predictions=model_arima_fit.forecast(100)
 print(model_arima_fit.summary())
 # print(predictions[0])
