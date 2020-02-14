@@ -52,5 +52,6 @@ function fetchdata(){
 }
 
 $(document).ready(function(){
- timer = setTimeout(fetchdata,10000);
+  fetchdata();
+  timer = setTimeout(fetchdata,10000);
 })
