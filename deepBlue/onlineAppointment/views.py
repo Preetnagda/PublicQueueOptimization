@@ -4,7 +4,7 @@ from registration import models as registration_models
 import qrcode
 import json
 from django.views.decorators.http import require_http_methods
-from datetime import datetime,time
+from datetime import datetime,time,timedelta
 from django.http import HttpResponse,JsonResponse
 from django.templatetags.static import static
 
@@ -62,6 +62,12 @@ def qrCode(request):
 
 @require_http_methods(["GET"])
 def getAvailableSlots(request,appointmentDate=None,tom=None):
+    now = datetime.now()
+    todaysDay = now.weekday()
+    optimalDayFromToday = expected_number_of_patients(tom)
+    optimalDayOffset = (todaysDay + optimalDayFromToday + 1)%7
+    optimalDay = now + timedelta(days=optimalDayOffset)
+    optimalDay = optimalDay.date()
     if appointmentDate != None and tom != None :
         CHOICES = registration_models.doctor.CHOICES
         for choice in CHOICES:
@@ -93,5 +99,5 @@ def getAvailableSlots(request,appointmentDate=None,tom=None):
                     slots[7] = False
             except:
                 pass
-    data = {"slots":slots }
+    data = {"slots":slots , 'optimalDay':optimalDay}
     return JsonResponse(data)

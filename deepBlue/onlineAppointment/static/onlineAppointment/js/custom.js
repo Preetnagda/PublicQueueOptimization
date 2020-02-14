@@ -4,7 +4,7 @@ $( document ).ready(function() {
 function appointmentDateSelected(){
   var appointmentDate = $('#appointmentDate').val();
   var tom = $('#type_of_medication').val();
-  alert(appointmentDate);
+  // alert(appointmentDate);
 
   $.ajax({
           type: "GET",
@@ -16,7 +16,7 @@ function appointmentDateSelected(){
           datatype: 'JSON',
       })
       .done(function(response) {
-          alert(response["slots"]);
+          // alert(response["slots"]);
           for(var i=0;i<8;i++){
 
             if(!response["slots"][i]){
@@ -59,6 +59,10 @@ function appointmentDateSelected(){
             }
 
           }
+          $('#dayPrediction').html('');
+          $('#dayPrediction').append(`<p> You can book an appointment on ${response['optimalDay']}. We predict less number of people that day`);
+
+
 
 
       });
