@@ -1,6 +1,5 @@
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE','deepBlue.settings')
-
 import django
 django.setup()
 import datetime
@@ -81,7 +80,7 @@ def populateAppointmentRecords(days=300):
             queuePredictedTimeDecimal = queuePredictedTime - int(queuePredictedTime)
             queueTimeIn = newDate + timedelta(minutes = queuePredictedTimeInteger, seconds = queuePredictedTimeDecimal*60)
             queueConsultationIn = queueTimeIn + timedelta(minutes=actualPredictedTime)
-            is_follow_up = random.choice([True, False])
+            is_follow_up = random.choice([True,False,False,False,False,False])
             
             if todaysDay == 2:
                 if(is_follow_up==True):

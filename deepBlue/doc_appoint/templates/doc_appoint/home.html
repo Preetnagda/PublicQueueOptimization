@@ -80,7 +80,8 @@
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
 
-            context.innerHTML = minutes + ":" + seconds;
+            document.getElementById('expected_time').innerHTML = minutes + ":" + seconds;
+            console.log(minutes + ":" + seconds);
             if (--timer < 0) {
                 timer = time;
             }

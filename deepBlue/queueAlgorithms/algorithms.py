@@ -4,7 +4,11 @@ from billing.models import billingQueue
 import datetime
 from datetime import timedelta,timezone
 from django.utils import timezone
-# import pandas as pd
+import statsmodels
+import pandas as pd
+import numpy as np
+
+
 def getOptimalDoctor(type_of_medication):
     CHOICES = registration_models.doctor.CHOICES
     for choice in CHOICES:
@@ -126,3 +130,42 @@ def calculate_journey_time(tom):
     # print("overallTimeOfPatientsAheadOfMe " + str(overallTimeOfPatientsAheadOfMe))
     # print("timepp" + str(docInstance.timepp))
     return (overallTimeOfPatientsAheadOfMe + 10 + docInstance.timepp)
+
+
+    def expected_number_of_patients(speciality_id):
+        speciality_docs=registration_models.doctor.objects.filter(speciality=speciality_id)
+        this_is_array=[]
+        for a_doc in speciality_docs:
+            docs_id=a_doc.id
+            data = pd.DataFrame(list(registration_models.appointmentQueue.objects.all().values()))
+            data=data[data['doctor_required_id']== 4 ]
+            data=data[data['is_follow_up']== False ]
+            d=pd.DatetimeIndex(data['consultation_in'])
+            data['day']=d.day
+            data['day_of_the_week']=d.dayofweek
+            data['date']=d.date
+            data['month']=d.month
+            data = data.set_index(pd.DatetimeIndex(data['consultation_in']))
+            dates = data.date.unique()
+            new_df=pd.DataFrame(columns=['date','patients'])
+            for adate in dates:
+                new_df=new_df.append({'date' : adate , 'patients' : float(len(data[data['date']==adate]))},ignore_index=True)
+        
+            new_df = new_df.set_index('date')
+            Y=new_df['patients'].values
+            model_arima=statsmodels.tsa.statespace.sarimax.SARIMAX(Y,enxog=None,order=(1,1,0),seasonal_order=(0, 1, 1, 7))
+            model_arima_fit=model_arima.fit()
+            predictions=model_arima_fit.forecast(steps=7)
+            this_is_array.append(predictions)
+          
+        this_is_array=np.array(this_is_array)
+        result = np.where(this_is_array == np.amin(this_is_array))
+        print(result)
+        minpos=result[0][1]
+        print(minpos)
+        return(minpos)
+        
+
+if __name__ == '__main__':
+    expected_number_of_patients(1)
+    print("done")
