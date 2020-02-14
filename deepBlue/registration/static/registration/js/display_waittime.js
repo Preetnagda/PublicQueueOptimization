@@ -7,17 +7,19 @@ function callajax(select){
     $.ajax({
             type: "GET",
             url: 'getDoctorTime/'+selected_option,
-            datatype: 'JSON',  
+            datatype: 'JSON',
         })
 
         .done(function(response) {
             $('#predict_time_div').show();
-            $('#predict_time_div').html("Your estimated time for medication is " + 
-            response.estimatedTime + " minutes.<br/><br/>");
+            $('#predict_time_div').html("Your estimated time for medication is " +
+            response.estimatedTime + " minutes.<br/>");
+            $('#predict_time_div').append("You will be out of billing before approximately " +
+            response.journeyTime + " hours.<br/><br/>");
 
             console.log(response)
             console.log(response.estimatedTime);
-            
+
         });
  }
 // $(".form_datetime").datetimepicker({

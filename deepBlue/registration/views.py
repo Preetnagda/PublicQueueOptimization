@@ -4,21 +4,20 @@ from registration import models,methods
 from django.http import HttpResponse,JsonResponse
 from queueAlgorithms import algorithms
 import datetime
-from datetime import timezone
+from datetime import timezone,timedelta
 from onlineAppointment import models as onlineAppointment_models
 # Create your views here.
 def getDoctorTime(request,tom=0):
-    print("TOM :" + str(tom))
-    doc = methods.getOptimalDoctor(tom)
-
+    doc = algorithms.getOptimalDoctor(tom)
+    journeyTime = algorithms.calculate_journey_time(tom)
     estimatedTime = None
+    now = datetime.datetime.now()
+    journeyTime = now + timedelta(seconds=float(journeyTime)*60)
+    journeyTime = str(journeyTime.time())[0:5]
     if doc != -1:
         estimatedTime = algorithms.getDoctor_OverallEstimatedTime(doc)
-    print(estimatedTime)
-
     if (request.method=='GET'):
-        return JsonResponse({'estimatedTime':estimatedTime})
-
+        return JsonResponse({'estimatedTime':estimatedTime,'journeyTime': journeyTime})
     else:
         return ({'estimatedTime':estimatedTime})
 
@@ -47,7 +46,7 @@ def register(request):
             doc = models.doctor.objects.filter(id=ifFollowUp)[0]
             isFollowUpBoolean = True
         else:
-            doc = methods.getOptimalDoctor(tom)
+            doc = algorithms.getOptimalDoctor(tom)
         if doc != -1:
             estimatedTime = algorithms.getDoctor_OverallEstimatedTime(doc)
             # check duplicate patients later
@@ -58,7 +57,9 @@ def register(request):
                 doctor_required = doc,
                 predicted_time = estimatedTime,
                 time_in = now,
-                is_follow_up = isFollowUpBoolean
+                is_follow_up = isFollowUpBoolean,
+                expected_consultation_out = now + timedelta(seconds=float(estimatedTime)*60)+timedelta(seconds=float(doc.timepp*60))
+
             )
             queueEntry.save()
             request.session['current_Patient'] = newPatient.id
@@ -85,26 +86,33 @@ def registerOnlineAppointment(request,patientID = None):
             doc = models.doctor.objects.filter(id=ifFollowUp)[0]
             isFollowUpBoolean = True
         else:
-            doc = methods.getOptimalDoctor(tom)
+            doc = algorithms.getOptimalDoctor(checkAppointment.tom)
+        doctorQueue = models.appointmentQueue.objects.filter(doctor_required = doc)
+        minTimeIn = doctorQueue[0].time_in
+        for patient in doctorQueue:
+            if(patient.time_in < minTimeIn):
+                minTimeIn = patient.time_in
+        newTimeIn = minTimeIn + datetime.timedelta(0,3)
         if(timediff < 0):
-            if doc != -1:
-                estimatedTime = 0
-                now = datetime.datetime.now()
-                queueEntry = models.appointmentQueue(
-                    patient = checkAppointment.patient,
-                    doctor_required = doc,
-                    predicted_time = estimatedTime,
-                    time_in = checkAppointment.time,
-                    is_follow_up = isFollowUpBoolean
-                )
-        elif(timediff < 45):
+            estimatedTime = 0
+            now = datetime.datetime.now()
             queueEntry = models.appointmentQueue(
                 patient = checkAppointment.patient,
                 doctor_required = doc,
                 predicted_time = estimatedTime,
-                time_in = checkAppointment.time,
+                time_in = newTimeIn,
                 is_follow_up = isFollowUpBoolean
             )
-        queueEntry.save()
-        request.session['current_Patient'] = newPatient.id
-        return redirect("../patient/")
+            queueEntry.save()
+        elif(timediff < 120):
+            estimatedTime = 0
+            queueEntry = models.appointmentQueue(
+                patient = checkAppointment.patient,
+                doctor_required = doc,
+                predicted_time = estimatedTime,
+                time_in = newTimeIn,
+                is_follow_up = isFollowUpBoolean
+            )
+            queueEntry.save()
+        request.session['current_Patient'] = checkAppointment.patient.id
+        return redirect("../../patient/")

@@ -3,24 +3,6 @@ from queueAlgorithms import algorithms
 from queueAlgorithms import models
 from datetime import datetime, timezone
 
-def getOptimalDoctor(type_of_medication):
-    CHOICES = doctor.CHOICES
-    for choice in CHOICES:
-        if(choice[1]==type_of_medication):
-            type_of_medication = choice[0]
-    docList = doctor.objects.filter(speciality=type_of_medication)
-    if docList is not None:
-        docInstance = docList[0]
-        docMin=algorithms.getDoctor_OverallEstimatedTime(docList[0])
-        for doc in docList:
-            docTime = algorithms.getDoctor_OverallEstimatedTime(doc)
-            if(docMin>docTime):
-                docMin = docTime
-                docInstance = doc
-        return docInstance
-    else:
-        return (-1)
-
 def checkIfFollowUp(patientPhoneNumber):
     #get patient id
     pWithSameNumber = patient.objects.filter(phno=patientPhoneNumber).last()

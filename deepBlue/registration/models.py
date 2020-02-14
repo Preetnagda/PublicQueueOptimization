@@ -50,3 +50,4 @@ class appointmentQueue(models.Model):
     actual_time = models.DecimalField(max_digits=10,decimal_places=1,null=True,blank=True,default=None) #time_in_q  time_out - time_in
     consultation_time_in=models.DateTimeField(default=datetime.datetime.now())
     is_follow_up = models.BooleanField(default=False)
+    expected_consultation_out=models.DateTimeField(default=datetime.datetime.now())
