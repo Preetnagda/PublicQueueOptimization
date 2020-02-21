@@ -34,6 +34,29 @@ def index(request):
             tom = tom
         )
         newAppointment.save()
+        doctor = algorithms.getOptimalDoctor(tom)
+        slotTimeInt = int(slotTime)
+        slotTimeInt = slotTimeInt - 8
+        slotNumber = "slot"+str(slotTimeInt)
+        slotModel = registration_models.slots.objects.filter(slotDoctor=doctor,dateOfSlot=date_object)[0]
+        if slotTimeInt == 1:
+            slotModel.slot1 = True
+        elif slotTimeInt == 2:
+            slotModel.slot2 = True
+        elif slotTimeInt == 3:
+            slotModel.slot3 = True
+        elif slotTimeInt == 4:
+            slotModel.slot4 = True
+        elif slotTimeInt == 5:
+            slotModel.slot5 = True
+        elif slotTimeInt == 6:
+            slotModel.slot6 = True
+        elif slotTimeInt == 7:
+            slotModel.slot7 = True
+        elif slotTimeInt == 8:
+            slotModel.slot8 = True
+        slotModel.save()
+
         x = {
           "patient": patientRef.id,
           "newAppointment": newAppointment.id,

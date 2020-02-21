@@ -78,7 +78,7 @@ def populateAppointmentRecords(days=300):
         for entry in range(entries):
             newDate = newDate+timedelta(minutes = 5)
             queuePatient = patient.objects.filter(id=random.randrange(1,50))[0]
-            queueDoctor = doctor.objects.filter(id=6)[0]
+            queueDoctor = doctor.objects.filter(id=3)[0]
             queuePredictedTime = random.uniform(8.00,12.00)
             actualPredictedTime = random.uniform(8.00,12.00)
             queuePredictedTimeInteger = int(queuePredictedTime)
@@ -130,4 +130,5 @@ def populateAppointmentRecords(days=300):
 
 if __name__ == '__main__':
     populateAppointmentRecords()
+    #populatePatient()
     print("done")

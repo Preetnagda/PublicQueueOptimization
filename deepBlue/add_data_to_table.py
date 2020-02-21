@@ -14,7 +14,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 def get_time_per_patient(id):
-    data = pd.read_csv('c1.csv')
+    data = pd.read_csv('c (4).csv')
     data=data[data['doctor_required_id']== id]
     data=data[data['is_follow_up']== False ]
     data = data.set_index(pd.DatetimeIndex(data['consultation_in']))
@@ -39,7 +39,7 @@ def get_time_per_patient(id):
     return predicted_values[0]
 
 def get_time_follow_up_per_patient(id):
-    data = pd.read_csv('c1.csv')
+    data = pd.read_csv('c (4).csv')
     data=data[data['doctor_required_id']== id]
     data=data[data['is_follow_up']== True ]
     data = data.set_index(pd.DatetimeIndex(data['consultation_in']))

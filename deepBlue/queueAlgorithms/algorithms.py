@@ -4,7 +4,7 @@ from billing.models import billingQueue
 import datetime
 from datetime import timedelta,timezone
 from django.utils import timezone
-import statsmodels
+import statsmodels.api as sm
 import pandas as pd
 import numpy as np
 
@@ -132,35 +132,42 @@ def calculate_journey_time(tom):
     return (overallTimeOfPatientsAheadOfMe + 10 + docInstance.timepp)
 
 
-    def expected_number_of_patients(speciality_id):
-        speciality_docs=registration_models.doctor.objects.filter(speciality=speciality_id)
-        this_is_array=[]
-        for a_doc in speciality_docs:
-            docs_id=a_doc.id
-            data = pd.DataFrame(list(registration_models.appointmentQueue.objects.all().values()))
-            data=data[data['doctor_required_id']== 4 ]
-            data=data[data['is_follow_up']== False ]
-            d=pd.DatetimeIndex(data['consultation_in'])
-            data['day']=d.day
-            data['day_of_the_week']=d.dayofweek
-            data['date']=d.date
-            data['month']=d.month
-            data = data.set_index(pd.DatetimeIndex(data['consultation_in']))
-            dates = data.date.unique()
-            new_df=pd.DataFrame(columns=['date','patients'])
-            for adate in dates:
-                new_df=new_df.append({'date' : adate , 'patients' : float(len(data[data['date']==adate]))},ignore_index=True)
+def expected_number_of_patients(speciality_id):
+    speciality_docs=registration_models.doctor.objects.filter(speciality=speciality_id)
+    this_is_array=[]
+    for a_doc in speciality_docs:
+        docs_id=a_doc.id
+        data = pd.DataFrame(list(models.appointmentRecords.objects.all().values()))
+        data=data[data['doctor_required_id']== docs_id ]
+        data=data[data['is_follow_up']== False ]
+        d=pd.DatetimeIndex(data['consultation_in'])
+        data['day']=d.day
+        data['day_of_the_week']=d.dayofweek
+        data['date']=d.date
+        data['month']=d.month
+        data = data.set_index(pd.DatetimeIndex(data['consultation_in']))
+        dates = data.date.unique()
+        new_df=pd.DataFrame(columns=['date','patients'])
+        for adate in dates:
+            new_df=new_df.append({'date' : adate , 'patients' : float(len(data[data['date']==adate]))},ignore_index=True)
 
-            new_df = new_df.set_index('date')
-            Y=new_df['patients'].values
-            model_arima=statsmodels.tsa.statespace.sarimax.SARIMAX(Y,enxog=None,order=(1,1,0),seasonal_order=(0, 1, 1, 7))
-            model_arima_fit=model_arima.fit()
-            predictions=model_arima_fit.forecast(steps=7)
-            this_is_array.append(predictions)
+        new_df = new_df.set_index('date')
+        Y=new_df['patients'].values
+        
+        model_arima=sm.tsa.statespace.SARIMAX(Y,enxog=None,order=(1,1,0),seasonal_order=(0, 1, 1, 7))
+        model_arima_fit=model_arima.fit()
+        predictions=model_arima_fit.forecast(steps=7)
+        this_is_array.append(predictions)
 
-        this_is_array=np.array(this_is_array)
-        result = np.where(this_is_array == np.amin(this_is_array))
-        print(result)
-        minpos=result[0][1]
-        print(minpos)
-        return(minpos)
+
+    
+    print(this_is_array)
+    minpos = this_is_array[0][0]
+    position = [None,None]
+    for i in range(len(this_is_array)):
+        for j in range (len(this_is_array[i])):
+            if this_is_array[i][j] < minpos:
+                minpos = this_is_array[i][j]
+                position = [i,j]
+    minpos = position[1]
+    return(minpos)

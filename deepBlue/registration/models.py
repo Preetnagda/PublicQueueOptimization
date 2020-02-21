@@ -13,9 +13,8 @@ class patient(models.Model):
 
 class doctor(models.Model):
     CHOICES = (
-        ("1", 'Heart'),
+        ("1", 'General Physician'),
         ("2", 'ENT'),
-        ("3", 'Physcologist'),
     )
 
     timepp = models.DecimalField(max_digits=10,decimal_places=1)

@@ -126,4 +126,5 @@ def populateAppointmentRecords(days=300):
 
 if __name__ == '__main__':
     populateAppointmentRecords()
+    #populatePatient()
     print("done")
